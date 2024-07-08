@@ -1,7 +1,4 @@
-﻿using backend.Models;
-using System.Collections.Generic;
-
-namespace backend.Models
+﻿namespace backend.Models
 {
     public class Character
     {
@@ -10,7 +7,6 @@ namespace backend.Models
         public string Description { get; set; }
         public int StoryId { get; set; }
         public Story Story { get; set; }
-
         public ICollection<StoryPart> StoryParts { get; set; }
     }
 }

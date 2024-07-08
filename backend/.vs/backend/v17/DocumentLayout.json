@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "F:\\Programming Projects\\Phase-2-2024\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,24 +23,80 @@
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\data\\studentcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\data\\studentcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\models\\storypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\storypart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\models\\screenshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\screenshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\models\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\models\\screenshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\screenshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\models\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\models\\character.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\data\\backendcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\data\\backendcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\controllers\\storycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\controllers\\storycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\storypartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\storypartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\controllers\\characterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\controllers\\characterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\screenshotrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\screenshotrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\iscreenshotrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\iscreenshotrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\icharacterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\icharacterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\characterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\characterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\controllers\\storypartscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\controllers\\storypartscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\controllers\\screenshotscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\controllers\\screenshotscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\storyrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\storyrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\istorypartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\istorypartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|f:\\programming projects\\phase-2-2024\\backend\\backend\\repositories\\istoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1A53798-D34E-46FB-A81C-FFF5C729F060}|backend\\backend.csproj|solutionrelative:backend\\repositories\\istoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,111 +106,267 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 16,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "backend\\Controllers\\UsersController.cs",
-              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "backend\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAAC8AAAAAAAAAAAAIwFEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T05:23:16.026Z",
+              "DocumentIndex": 1,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "backend\\Properties\\launchSettings.json",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Properties\\launchSettings.json",
+              "RelativeToolTip": "backend\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-03T02:57:23.531Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 19,
+              "Title": "StoryPartsController.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\StoryPartsController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\StoryPartsController.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\StoryPartsController.cs",
+              "RelativeToolTip": "backend\\Controllers\\StoryPartsController.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAYwD8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:42:20.251Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CharactersController.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\CharactersController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\CharactersController.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\CharactersController.cs",
+              "RelativeToolTip": "backend\\Controllers\\CharactersController.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAA7wD8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:42:04.949Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ScreenshotsController.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\ScreenshotsController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\ScreenshotsController.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\ScreenshotsController.cs",
+              "RelativeToolTip": "backend\\Controllers\\ScreenshotsController.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAYwCUAAABZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:41:51.554Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "StoryController.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\StoryController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\StoryController.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\StoryController.cs",
+              "RelativeToolTip": "backend\\Controllers\\StoryController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACkAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:38:44.772Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "StoryPartRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\StoryPartRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\StoryPartRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\StoryPartRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\StoryPartRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:38:12.54Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CharacterRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\CharacterRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\CharacterRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\CharacterRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\CharacterRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:38:01.503Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ScreenshotRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\ScreenshotRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\ScreenshotRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\ScreenshotRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\ScreenshotRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:37:49.788Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "StoryRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\StoryRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\StoryRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\StoryRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\StoryRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:37:27.953Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "IStoryPartRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IStoryPartRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\IStoryPartRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IStoryPartRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\IStoryPartRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:37:10.892Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ICharacterRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\ICharacterRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\ICharacterRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\ICharacterRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\ICharacterRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:36:53.51Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IScreenshotRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IScreenshotRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\IScreenshotRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IScreenshotRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\IScreenshotRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:36:41.212Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IStoryRepository.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IStoryRepository.cs",
+              "RelativeDocumentMoniker": "backend\\Repositories\\IStoryRepository.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IStoryRepository.cs",
+              "RelativeToolTip": "backend\\Repositories\\IStoryRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T02:36:22.823Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\UserController.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Controllers\\UserController.cs",
+              "RelativeToolTip": "backend\\Controllers\\UserController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T05:23:16.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\appsettings.json",
               "RelativeDocumentMoniker": "backend\\appsettings.json",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\appsettings.json",
               "RelativeToolTip": "backend\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-06-19T05:19:33.483Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Program.cs",
               "RelativeDocumentMoniker": "backend\\Program.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Program.cs",
               "RelativeToolTip": "backend\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACwAAAAAAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAADwvxcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-19T04:06:40.379Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "backend\\Repositories\\UserRepository.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\UserRepository.cs",
               "RelativeToolTip": "backend\\Repositories\\UserRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAowCEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-19T04:05:32.941Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "backend\\Repositories\\IUserRepository.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Repositories\\IUserRepository.cs",
               "RelativeToolTip": "backend\\Repositories\\IUserRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T04:03:30.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-19T04:03:30.976Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BackendContext.cs",
+              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Data\\BackendContext.cs",
+              "RelativeDocumentMoniker": "backend\\Data\\BackendContext.cs",
+              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Data\\BackendContext.cs",
+              "RelativeToolTip": "backend\\Data\\BackendContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T04:02:38.968Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "StudentContext.cs",
-              "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Data\\StudentContext.cs",
-              "RelativeDocumentMoniker": "backend\\Data\\StudentContext.cs",
-              "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Data\\StudentContext.cs",
-              "RelativeToolTip": "backend\\Data\\StudentContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T04:02:38.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "StoryPart.cs",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\StoryPart.cs",
               "RelativeDocumentMoniker": "backend\\Models\\StoryPart.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\StoryPart.cs",
               "RelativeToolTip": "backend\\Models\\StoryPart.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T04:01:02.564Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-19T04:01:02.564Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "Character.cs",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\Character.cs",
               "RelativeDocumentMoniker": "backend\\Models\\Character.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\Character.cs",
               "RelativeToolTip": "backend\\Models\\Character.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T04:00:01.152Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-19T04:00:01.152Z"
             },
             {
               "$type": "Document",
@@ -168,40 +376,33 @@
               "RelativeDocumentMoniker": "backend\\Models\\Screenshot.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\Screenshot.cs",
               "RelativeToolTip": "backend\\Models\\Screenshot.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T03:59:08.671Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-19T03:59:08.671Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 7,
               "Title": "Story.cs",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\Story.cs",
               "RelativeDocumentMoniker": "backend\\Models\\Story.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\Story.cs",
               "RelativeToolTip": "backend\\Models\\Story.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T03:58:04.205Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-19T03:58:04.205Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "User.cs",
               "DocumentMoniker": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\User.cs",
               "RelativeDocumentMoniker": "backend\\Models\\User.cs",
               "ToolTip": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\Models\\User.cs",
               "RelativeToolTip": "backend\\Models\\User.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAFAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T03:55:37.773Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "WhenOpened": "2024-06-19T03:55:37.773Z"
             }
           ]
         }

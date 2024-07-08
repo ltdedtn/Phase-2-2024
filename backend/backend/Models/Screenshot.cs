@@ -1,6 +1,4 @@
-﻿using backend.Models;
-
-namespace backend.Models
+﻿namespace backend.Models
 {
     public class Screenshot
     {
