@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "l08cztbHV5M=",
+  "dgSpecHash": "ZCoGq3JgpB4=",
   "success": true,
   "projectFilePath": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\BG\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\BG\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\BG\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\BG\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\BG\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\BG\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

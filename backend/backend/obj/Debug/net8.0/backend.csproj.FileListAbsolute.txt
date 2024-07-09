@@ -135,3 +135,4 @@ F:\Programming Projects\Phase-2-2024\backend\backend\obj\Debug\net8.0\refint\bac
 F:\Programming Projects\Phase-2-2024\backend\backend\obj\Debug\net8.0\backend.pdb
 F:\Programming Projects\Phase-2-2024\backend\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 F:\Programming Projects\Phase-2-2024\backend\backend\obj\Debug\net8.0\ref\backend.dll
+F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\BCrypt.Net-Next.dll

@@ -6,6 +6,7 @@ public class StoryPart
     public string Content { get; set; }
     public int StoryId { get; set; }
     public int CharacterId { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public virtual Character Character { get; set; }

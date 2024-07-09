@@ -1,21 +1,22 @@
-import React, { useState, FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
     const loginData = {
-      UsernameOrEmail: formData.get("username") as string,
+      Username: formData.get("username") as string,
       Password: formData.get("password") as string,
     };
 
     try {
-      const response = await fetch("/api/User/Login", {
+      const response = await fetch("https://localhost:7023/api/User/Login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,14 +25,21 @@ const Login: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        const errorMessage = await response.text();
+        throw new Error(errorMessage || "Login failed");
       }
 
-      // Handle successful login, e.g., save token to localStorage
-      navigate("/dashboard"); // Navigate to dashboard or any other route
+      const data = await response.json();
+      const token = data.token; // Assuming the response includes a 'token' field
+
+      // Store token in localStorage or session storage for persistent login
+      localStorage.setItem("token", token);
+
+      // Navigate to dashboard or any other authenticated route
+      navigate("/dash");
     } catch (error) {
       console.error("Login error:", error);
-      alert("Login failed. Please try again.");
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -43,6 +51,7 @@ const Login: React.FC = () => {
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="form">
               <h2>Login</h2>
+              {error && <p className="text-red-500">{error}</p>}
             </div>
             <div>
               <label className="label" htmlFor="username">
@@ -59,7 +68,7 @@ const Login: React.FC = () => {
             </div>
             <div>
               <label className="label" htmlFor="password">
-                Password: <span className="nowrap"></span>
+                Password:
               </label>
               <input
                 className={`w-full input input-bordered`}

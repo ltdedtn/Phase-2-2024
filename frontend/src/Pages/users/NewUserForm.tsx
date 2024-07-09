@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
+import bcrypt from "bcryptjs";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
@@ -40,15 +41,17 @@ const SignUp: React.FC = () => {
       return;
     }
 
-    const signUpData = {
-      Username: username,
-      Email: email,
-      Password: password,
-    };
-
     try {
-      console.log("Sign up data:", signUpData);
-      const response = await fetch("/api/User/Register", {
+      // Hash the password using bcrypt
+      const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+
+      const signUpData = {
+        Username: username,
+        Email: email,
+        PasswordHash: hashedPassword, // Use the hashed password
+      };
+
+      const response = await fetch("https://localhost:7023/api/User/Register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,14 +60,20 @@ const SignUp: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Sign up failed");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Sign up failed");
       }
 
       // Handle successful sign up, e.g., navigate to login page
       navigate("/login"); // Navigate to login or any other route
     } catch (error) {
-      console.error("Sign up error:", error);
-      alert("Sign up failed. Please try again.");
+      if (error instanceof Error) {
+        console.error("Sign up error:", error.message);
+        alert(`Sign up failed: ${error.message}. Please try again.`);
+      } else {
+        console.error("Sign up error:", error);
+        alert("Sign up failed. Please try again.");
+      }
     }
   };
 
@@ -90,7 +99,10 @@ const SignUp: React.FC = () => {
                   onChange={handleUsernameChange}
                 />
                 {!validUsername && (
-                  <span className="text-red-500">Invalid username</span>
+                  <span className="text-red-500">
+                    Username must be 5-30 characters long and can include
+                    letters and numbers only.
+                  </span>
                 )}
               </div>
               <div>
@@ -108,7 +120,7 @@ const SignUp: React.FC = () => {
                   onChange={handleEmailChange}
                 />
                 {!validEmail && (
-                  <span className="text-red-500">Invalid email</span>
+                  <span className="text-red-500">Invalid email address.</span>
                 )}
               </div>
               <div>

@@ -76,21 +76,19 @@ namespace backend.Data
                 entity.Property(sp => sp.Content).IsRequired();
                 entity.Property(sp => sp.CreatedAt).IsRequired();
 
-                // Define relationship with Story and Character
+                // Define relationships
                 entity.HasOne(sp => sp.Story)
                     .WithMany(s => s.StoryParts)
                     .HasForeignKey(sp => sp.StoryId)
                     .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade); // or Restrict based on your requirements
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(sp => sp.Character)
-                    .WithMany()
-                    .HasForeignKey(sp => sp.CharacterId)
+                    .WithMany(c => c.StoryParts)
+                    .HasForeignKey(sp => sp.CharacterId) // Ensure correct mapping
                     .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade); // or Restrict based on your requirements
+                    .OnDelete(DeleteBehavior.Cascade);
             });
-
-            // Additional configurations and relationships can be added here
 
             // Indexes can be configured if needed
             modelBuilder.Entity<Screenshot>()
