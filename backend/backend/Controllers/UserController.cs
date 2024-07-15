@@ -60,14 +60,28 @@ namespace backend.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserUpdateDto userUpdateDto)
         {
-            if (id != user.UserId)
+            if (id != userUpdateDto.UserId)
             {
-                return BadRequest();
+                return BadRequest("User ID mismatch");
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            var existingUser = await _context.Users.FindAsync(id);
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            // Update only specific fields
+            existingUser.Username = userUpdateDto.Username;
+            existingUser.Email = userUpdateDto.Email;
+
+            // Update password hash if a new password is provided
+            if (!string.IsNullOrEmpty(userUpdateDto.PasswordHash))
+            {
+                existingUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword(userUpdateDto.PasswordHash);
+            }
 
             try
             {
@@ -88,6 +102,10 @@ namespace backend.Controllers
             return NoContent();
         }
 
+
+
+
+
         // DELETE: api/User/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
@@ -103,16 +121,30 @@ namespace backend.Controllers
 
             return NoContent();
         }
-
         // POST: api/User/Register
         [HttpPost("Register")]
         public async Task<ActionResult<User>> Register(RegisterUserDto registerUserDto)
         {
+            // Check if username already exists
+            if (await _context.Users.AnyAsync(u => u.Username == registerUserDto.Username))
+            {
+                return BadRequest("Username already exists.");
+            }
+
+            // Check if email already exists
+            if (await _context.Users.AnyAsync(u => u.Email == registerUserDto.Email))
+            {
+                return BadRequest("Email already exists.");
+            }
+
+            // Hash the password before storing it
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerUserDto.PasswordHash);
+
             var user = new User
             {
                 Username = registerUserDto.Username,
                 Email = registerUserDto.Email,
-                PasswordHash = registerUserDto.PasswordHash, // Ensure PasswordHash is properly hashed
+                PasswordHash = hashedPassword,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -121,6 +153,7 @@ namespace backend.Controllers
 
             return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
         }
+
 
         // POST: api/User/Login
         [HttpPost("Login")]
@@ -131,7 +164,7 @@ namespace backend.Controllers
 
             if (user == null || !VerifyPassword(loginDto.Password, user.PasswordHash))
             {
-                return Unauthorized(); // Or return a more specific error response
+                return Unauthorized(); 
             }
 
             // Generate JWT token and return to client
@@ -143,8 +176,7 @@ namespace backend.Controllers
 
         private bool VerifyPassword(string password, string passwordHash)
         {
-            // Implement your password verification logic here
-            // Example using a hash comparison library like BCrypt.NET:
+
             return BCrypt.Net.BCrypt.Verify(password, passwordHash);
         }
 
@@ -190,4 +222,11 @@ namespace backend.Controllers
         public string Username { get; set; }
         public string Password { get; set; }
     }
+}
+public class UserUpdateDto
+{
+    public int UserId { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string PasswordHash { get; set; }
 }

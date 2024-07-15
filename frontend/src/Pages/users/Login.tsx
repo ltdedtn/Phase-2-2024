@@ -1,9 +1,10 @@
 import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
+import { useUserContext } from "./UserContext";
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
+  const { setUsername } = useUserContext();
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -30,12 +31,15 @@ const Login: React.FC = () => {
       }
 
       const data = await response.json();
-      const token = data.token; // Assuming the response includes a 'token' field
+      const token = data.token;
+      const username = data.username;
 
-      // Store token in localStorage or session storage for persistent login
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
 
-      // Navigate to dashboard or any other authenticated route
+      setUsername(username);
+
+      // Navigate to another page after setting localStorage
       navigate("/dash");
     } catch (error) {
       console.error("Login error:", error);
@@ -45,7 +49,6 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Header />
       <div className="pt-8 relative flex flex-col justify-center">
         <div className="p-6 m-auto bg-grey rounded-md shadow-md ring-2 ring-gray-800/50 lg:max-w-xl">
           <form className="space-y-4" onSubmit={handleSubmit}>

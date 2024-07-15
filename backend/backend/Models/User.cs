@@ -10,6 +10,6 @@ namespace backend.Models
         public string PasswordHash { get; set; }
         public string Email { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<Story> Stories { get; set; }
+        public ICollection<Story>? Stories { get; set; }
     }
 }

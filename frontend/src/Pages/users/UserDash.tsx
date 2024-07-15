@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Header from "../../components/Header/Header";
+
+import { useNavigate } from "react-router-dom";
 
 interface User {
   userId: number;
@@ -9,10 +10,11 @@ interface User {
   createdAt: string;
 }
 
-const UserDash: React.FC = () => {
+const UserDash = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -21,7 +23,7 @@ const UserDash: React.FC = () => {
         const response = await axios.get<User[]>(
           "https://localhost:7023/api/User"
         );
-        console.log("Response received:", response.data);
+
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users", error);
@@ -34,6 +36,25 @@ const UserDash: React.FC = () => {
     fetchUsers();
   }, []);
 
+  const handleEdit = (userId: number) => {
+    navigate(`/dash/users/${userId}/edit`);
+  };
+
+  const handleDelete = async (userId: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(`https://localhost:7023/api/User/${userId}`);
+        setUsers(users.filter((user) => user.userId !== userId));
+      } catch (error) {
+        console.error("Error deleting user", error);
+        setError("Failed to delete user. Please try again later.");
+      }
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -44,7 +65,6 @@ const UserDash: React.FC = () => {
 
   return (
     <>
-      <Header />
       <div className="overflow-x-auto">
         <table className="table-auto w-full">
           <thead>
@@ -52,6 +72,7 @@ const UserDash: React.FC = () => {
               <th className="px-4 py-2">Username</th>
               <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Created At</th>
+              <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -61,6 +82,20 @@ const UserDash: React.FC = () => {
                 <td className="border px-4 py-2">{user.email}</td>
                 <td className="border px-4 py-2">
                   {new Date(user.createdAt).toLocaleString()}
+                </td>
+                <td className="border px-4 py-2">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                    onClick={() => handleEdit(user.userId)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleDelete(user.userId)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

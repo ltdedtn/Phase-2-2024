@@ -4,17 +4,22 @@ import Header from "./components/Header/Header";
 import Login from "./Pages/users/Login";
 import SignUp from "./Pages/users/NewUserForm";
 import UserDash from "./Pages/users/UserDash";
+import EditUserForm from "./Pages/users/EditUserForm";
+import { UserProvider } from "./Pages/users/UserContext";
 
 function App() {
   return (
     <div className="h-full min-h-full">
       <Router>
-        <Routes>
-          <Route path="/" element={<Header />}></Route>
-          <Route path="/dash" element={<UserDash />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signUp" element={<SignUp />}></Route>
-        </Routes>
+        <UserProvider>
+          <Header />
+          <Routes>
+            <Route path="/dash" element={<UserDash />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/dash/users/:userId/edit" element={<EditUserForm />} />
+          </Routes>
+        </UserProvider>
       </Router>
     </div>
   );

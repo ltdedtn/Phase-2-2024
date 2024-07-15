@@ -1,9 +1,7 @@
-import React, { useState, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
-import bcrypt from "bcryptjs";
+import React, { FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   const navigate = useNavigate();
 
   const USER_REGEX = /^[a-zA-Z0-9]{5,30}$/;
@@ -17,6 +15,7 @@ const SignUp: React.FC = () => {
   const [validEmail, setValidEmail] = useState(false);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
@@ -32,25 +31,20 @@ const SignUp: React.FC = () => {
     setPassword(event.target.value);
     setValidPassword(PASSWORD_REGEX.test(event.target.value));
   };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!validUsername || !validEmail || !validPassword) {
-      alert("Please fill out the form correctly.");
+      setError("Please fill out the form correctly.");
       return;
     }
 
     try {
-      // Hash the password using bcrypt
-      const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
-
       const signUpData = {
-        Username: username,
-        Email: email,
-        PasswordHash: hashedPassword, // Use the hashed password
+        username: username,
+        email: email,
+        passwordHash: password,
       };
-
       const response = await fetch("https://localhost:7023/api/User/Register", {
         method: "POST",
         headers: {
@@ -64,26 +58,26 @@ const SignUp: React.FC = () => {
         throw new Error(errorData.message || "Sign up failed");
       }
 
-      // Handle successful sign up, e.g., navigate to login page
       navigate("/login"); // Navigate to login or any other route
     } catch (error) {
       if (error instanceof Error) {
         console.error("Sign up error:", error.message);
-        alert(`Sign up failed: ${error.message}. Please try again.`);
+        setError(`Sign up failed: ${error.message}. Please try again.`);
       } else {
         console.error("Sign up error:", error);
-        alert("Sign up failed. Please try again.");
+        setError("Sign up failed. Please try again.");
       }
     }
   };
 
   return (
     <>
-      <Header />
       <div className="pt-8 relative flex flex-col justify-center">
         <div className="p-6 m-auto bg-grey rounded-md shadow-md ring-2 ring-gray-800/50 lg:max-w-xl">
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="form">
+              <h2>Create New User</h2>
+              {error && <p className="text-red-500">{error}</p>}
               <div>
                 <label className="label" htmlFor="username">
                   Username:
@@ -149,6 +143,13 @@ const SignUp: React.FC = () => {
                 <button className="btn btn-block" type="submit">
                   Sign Up
                 </button>
+              </div>
+              <div>
+                <Link to="/login">
+                  <button className="btn btn-block" type="button">
+                    Cancel
+                  </button>
+                </Link>
               </div>
             </div>
           </form>
