@@ -17,12 +17,20 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<Story>> GetStoriesAsync()
         {
-            return await _context.Stories.ToListAsync();
+            return await _context.Stories
+                .Include(s => s.Characters)
+                .Include(s => s.Screenshots)
+                .Include(s => s.StoryParts)
+                .ToListAsync();
         }
 
         public async Task<Story> GetStoryByIdAsync(int id)
         {
-            return await _context.Stories.FindAsync(id);
+            return await _context.Stories
+                .Include(s => s.Characters)
+                .Include(s => s.Screenshots)
+                .Include(s => s.StoryParts)
+                .FirstOrDefaultAsync(s => s.StoryId == id);
         }
 
         public async Task<Story> AddStoryAsync(Story story)

@@ -48,12 +48,18 @@ namespace backend.Data
                 entity.HasKey(sc => sc.ScreenshotId);
                 entity.Property(sc => sc.ImagePath).IsRequired();
 
-                // Define relationship with Story
+                // Define relationship with Story and Character
                 entity.HasOne(sc => sc.Story)
                     .WithMany(s => s.Screenshots)
                     .HasForeignKey(sc => sc.StoryId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Cascade); // or Restrict based on your requirements
+
+                entity.HasOne(sc => sc.Character)
+                    .WithMany(c => c.Screenshots)
+                    .HasForeignKey(sc => sc.CharacterId)
+                    .IsRequired(false)
+                    .OnDelete(DeleteBehavior.Restrict); // CharacterId is optional
             });
 
             modelBuilder.Entity<Character>(entity =>
@@ -76,7 +82,7 @@ namespace backend.Data
                 entity.Property(sp => sp.Content).IsRequired();
                 entity.Property(sp => sp.CreatedAt).IsRequired();
 
-                // Define relationships
+                // Define relationships with Story and Character
                 entity.HasOne(sp => sp.Story)
                     .WithMany(s => s.StoryParts)
                     .HasForeignKey(sp => sp.StoryId)
@@ -86,13 +92,16 @@ namespace backend.Data
                 entity.HasOne(sp => sp.Character)
                     .WithMany(c => c.StoryParts)
                     .HasForeignKey(sp => sp.CharacterId) // Ensure correct mapping
-                    .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .IsRequired(false) // CharacterId is optional
+                    .OnDelete(DeleteBehavior.Restrict); // or Cascade based on your requirements
             });
 
             // Indexes can be configured if needed
             modelBuilder.Entity<Screenshot>()
                 .HasIndex(sc => sc.StoryId);
+
+            modelBuilder.Entity<Screenshot>()
+                .HasIndex(sc => sc.CharacterId);
 
             modelBuilder.Entity<Character>()
                 .HasIndex(c => c.StoryId);

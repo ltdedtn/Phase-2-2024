@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using backend.Repositories;
 using System.Collections.Generic;
@@ -33,13 +34,45 @@ namespace backend.Controllers
             }
             return Ok(character);
         }
-
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        public async Task<ActionResult<Character>> PostCharacter([FromForm] CharacterCreate model)
         {
-            await _characterRepository.AddCharacterAsync(character);
-            return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
+            try
+            {
+                var character = new Character
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    StoryId = model.StoryId,
+                    // Populate other fields as needed
+                };
+
+                if (model.ImageFile != null && model.ImageFile.Length > 0)
+                {
+                    // Generate a unique file name or use GUID
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFile.FileName);
+                    var filePath = Path.Combine("wwwroot", "images", fileName); // Example: Save to wwwroot/images folder
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    character.ImageUrl = "/images/" + fileName; // Store relative URL in database
+                }
+
+                await _characterRepository.AddCharacterAsync(character);
+
+                return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for detailed debugging
+                Console.WriteLine($"Error creating character: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, Character character)

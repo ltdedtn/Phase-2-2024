@@ -31,6 +31,15 @@ const Header = () => {
     <div className="navbar bg-base-100 shadow-lg px-4 sm:px-8">
       <div className="flex-auto">
         <Link to="/">Home</Link>
+        <Link to="/stories" className="ml-4">
+          Stories
+        </Link>
+        <Link to="/characters" className="ml-4">
+          Characters
+        </Link>
+        <Link to="/dash" className="ml-4">
+          Users
+        </Link>
       </div>
       <div className="flex-none">
         {username ? (

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,18 +18,24 @@ namespace backend.Controllers
             _context = context;
         }
 
-        // GET: api/Story
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Story>>> GetStories()
         {
-            return await _context.Stories.ToListAsync();
+            return await _context.Stories
+                .Include(s => s.Characters)
+                .Include(s => s.Screenshots)
+                .Include(s => s.StoryParts)
+                .ToListAsync();
         }
 
-        // GET: api/Story/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Story>> GetStory(int id)
         {
-            var story = await _context.Stories.FindAsync(id);
+            var story = await _context.Stories
+                .Include(s => s.Characters)
+                .Include(s => s.Screenshots)
+                .Include(s => s.StoryParts)
+                .FirstOrDefaultAsync(s => s.StoryId == id);
 
             if (story == null)
             {
@@ -40,7 +45,6 @@ namespace backend.Controllers
             return story;
         }
 
-        // POST: api/Story
         [HttpPost]
         public async Task<ActionResult<Story>> PostStory(Story story)
         {
@@ -50,7 +54,6 @@ namespace backend.Controllers
             return CreatedAtAction(nameof(GetStory), new { id = story.StoryId }, story);
         }
 
-        // PUT: api/Story/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStory(int id, Story story)
         {
@@ -80,7 +83,6 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Story/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStory(int id)
         {

@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "7/yvsnDRTixX0vVer35KSjS1HzfM4rGxA/gc1emwSdw=",
+  "Hash": "fEbjrz9TDr/opbY0Y6L8P9rTCulLSLQgXKUwnAridB8=",
   "Source": "backend",
   "BasePath": "_content/backend",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "backend\\wwwroot",
+      "Source": "backend",
+      "ContentRoot": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

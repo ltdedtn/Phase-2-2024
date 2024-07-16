@@ -17,12 +17,36 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<Character>> GetCharactersAsync()
         {
-            return await _context.Characters.ToListAsync();
+            var characters = await _context.Characters
+                .Include(c => c.StoryParts)
+                .Include(c => c.Screenshots)
+                .ToListAsync();
+
+            // Handle null values in properties like ImageUrl
+            characters.ForEach(c =>
+            {
+                c.ImageUrl ??= ""; // Set ImageUrl to empty string if null (C# 8.0 or later)
+                // Add additional handling for other properties if needed
+            });
+
+            return characters;
         }
 
         public async Task<Character> GetCharacterByIdAsync(int id)
         {
-            return await _context.Characters.FindAsync(id);
+            var character = await _context.Characters
+                .Include(c => c.StoryParts)
+                .Include(c => c.Screenshots)
+                .FirstOrDefaultAsync(c => c.CharacterId == id);
+
+            if (character != null)
+            {
+                // Handle null values in properties like ImageUrl
+                character.ImageUrl ??= ""; // Set ImageUrl to empty string if null (C# 8.0 or later)
+                // Add additional handling for other properties if needed
+            }
+
+            return character;
         }
 
         public async Task<Character> AddCharacterAsync(Character character)
@@ -42,8 +66,11 @@ namespace backend.Repositories
         public async Task DeleteCharacterAsync(int id)
         {
             var character = await _context.Characters.FindAsync(id);
-            _context.Characters.Remove(character);
-            await _context.SaveChangesAsync();
+            if (character != null)
+            {
+                _context.Characters.Remove(character);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

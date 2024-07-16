@@ -17,12 +17,18 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<Screenshot>> GetScreenshotsAsync()
         {
-            return await _context.Screenshots.ToListAsync();
+            return await _context.Screenshots
+                .Include(s => s.Story)
+                .Include(s => s.Character)
+                .ToListAsync();
         }
 
         public async Task<Screenshot> GetScreenshotByIdAsync(int id)
         {
-            return await _context.Screenshots.FindAsync(id);
+            return await _context.Screenshots
+                .Include(s => s.Story)
+                .Include(s => s.Character)
+                .FirstOrDefaultAsync(s => s.ScreenshotId == id);
         }
 
         public async Task<Screenshot> AddScreenshotAsync(Screenshot screenshot)

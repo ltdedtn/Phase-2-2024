@@ -19,7 +19,6 @@ const UserDash = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        console.log("Fetching users...");
         const response = await axios.get<User[]>(
           "https://localhost:7023/api/User"
         );
