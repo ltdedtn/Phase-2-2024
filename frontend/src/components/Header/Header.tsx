@@ -29,19 +29,83 @@ const Header = () => {
 
   return (
     <div className="navbar bg-base-100 shadow-lg px-4 sm:px-8">
-      <div className="flex-auto">
-        <Link to="/">Home</Link>
-        <Link to="/stories" className="ml-4">
-          Stories
-        </Link>
-        <Link to="/characters" className="ml-4">
-          Characters
-        </Link>
-        <Link to="/dash" className="ml-4">
-          Users
+      <div className="navbar-start">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-[1] w-52 p-2 shadow bg-base-100 rounded-box"
+          >
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/stories">Stories</Link>
+            </li>
+            <li>
+              <Link to="/characters">Characters</Link>
+            </li>
+            <li>
+              <Link to="/dash">Users</Link>
+            </li>
+            {username ? (
+              <li>
+                <button onClick={handleLogout}>Sign Out</button>
+              </li>
+            ) : (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
+            <li>
+              <label className="swap swap-rotate w-12 h-12">
+                <input
+                  type="checkbox"
+                  onChange={handleToggle}
+                  checked={theme === "dark"}
+                />
+                <div className="swap-off">🌙</div>
+                <div className="swap-on">☀️</div>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
+          ltdedtn
         </Link>
       </div>
-      <div className="flex-none">
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/stories">Stories</Link>
+          </li>
+          <li>
+            <Link to="/characters">Characters</Link>
+          </li>
+          <li>
+            <Link to="/dash">Users</Link>
+          </li>
+        </ul>
+      </div>
+      <div className="navbar-end hidden lg:flex items-center">
         {username ? (
           <>
             <span>Welcome, {username}!</span>
@@ -50,21 +114,19 @@ const Header = () => {
             </button>
           </>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/login" className="btn btn-ghost">
+            Login
+          </Link>
         )}
-      </div>
-      <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
-          <label className="swap swap-rotate w-12 h-12">
-            <input
-              type="checkbox"
-              onChange={handleToggle}
-              checked={theme === "dark"}
-            />
-            <h2 className="w-8 h-8 swap-off">Set Dark</h2>
-            <h2 className="w-8 h-8 swap-on">Set Light</h2>
-          </label>
-        </button>
+        <label className="swap swap-rotate w-12 h-12 ml-4">
+          <input
+            type="checkbox"
+            onChange={handleToggle}
+            checked={theme === "dark"}
+          />
+          <div className="swap-off">🌙</div>
+          <div className="swap-on">☀️</div>
+        </label>
       </div>
     </div>
   );

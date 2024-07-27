@@ -7,13 +7,24 @@ using Microsoft.Extensions.Hosting;
 using backend.Data;
 using backend.Repositories;
 using Microsoft.OpenApi.Models;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Load environment variables from .env file
+Env.Load();
+
+// Retrieve environment variables
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+var jwtToken = Environment.GetEnvironmentVariable("JWT_TOKEN");
+
+// Build connection string
+var connectionString = $"Server=192.168.1.4,1433;Database=Phase 2;User Id=Ben;Password={dbPassword};Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;";
 
 // Configure services
 builder.Services.AddControllers();
 builder.Services.AddDbContext<BackendContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 // Register repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();

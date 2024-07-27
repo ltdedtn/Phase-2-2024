@@ -5,9 +5,7 @@ namespace backend.Data
 {
     public class BackendContext : DbContext
     {
-        public BackendContext(DbContextOptions<BackendContext> options) : base(options)
-        {
-        }
+        public BackendContext(DbContextOptions<BackendContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Story> Stories { get; set; }
@@ -67,6 +65,7 @@ namespace backend.Data
                 entity.HasKey(c => c.CharacterId);
                 entity.Property(c => c.Name).IsRequired();
                 entity.Property(c => c.Description).IsRequired(false); // Optional description
+                entity.Property(c => c.ImageUrl).IsRequired(false); // Optional ImageUrl
 
                 // Define relationship with Story
                 entity.HasOne(c => c.Story)

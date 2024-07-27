@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
 
 interface User {
@@ -63,9 +62,9 @@ const UserDash = () => {
   }
 
   return (
-    <>
+    <div className="p-4">
       <div className="overflow-x-auto">
-        <table className="table-auto w-full">
+        <table className="table-auto w-full min-w-[640px]">
           <thead>
             <tr>
               <th className="px-4 py-2">Username</th>
@@ -101,7 +100,7 @@ const UserDash = () => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

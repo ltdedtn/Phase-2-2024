@@ -22,7 +22,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<Story>>> GetStories()
         {
             return await _context.Stories
-                .Include(s => s.Characters)
+                
                 .Include(s => s.Screenshots)
                 .Include(s => s.StoryParts)
                 .ToListAsync();

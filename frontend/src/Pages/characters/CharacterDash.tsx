@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 
 interface Character {
   characterId: number;
@@ -21,6 +19,8 @@ const CharacterDash = () => {
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -44,6 +44,16 @@ const CharacterDash = () => {
     setSelectedCharacter(character);
   };
 
+  const scrollCarousel = (direction: number) => {
+    const container = carouselRef.current;
+    if (container) {
+      container.scrollBy({
+        left: direction * container.clientWidth,
+        behavior: "smooth",
+      });
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -52,59 +62,75 @@ const CharacterDash = () => {
     return <div>{error}</div>;
   }
 
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
-  const carouselCenterMode = {
-    centerMode: true,
-    centerPadding: "20%",
-    slidesToShow: 3,
-  };
-
   return (
     <div className="character-dash-container">
-      <Carousel responsive={responsive} {...carouselCenterMode}>
-        {characters.map((character) => (
-          <div
-            key={character.characterId}
-            className="carousel-item"
-            onClick={() => handleCharacterClick(character)}
+      <div className="carousel-container">
+        <button
+          className="carousel-button left"
+          onClick={() => scrollCarousel(-1)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            <img
-              src={`https://localhost:7023/${character.imageUrl}`}
-              alt={character.name}
-              className="carousel-image"
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15 19l-7-7 7-7"
             />
-            <p>{character.name}</p>
-          </div>
-        ))}
-      </Carousel>
+          </svg>
+        </button>
+        <div className="carousel rounded-box" ref={carouselRef}>
+          {characters.map((character) => (
+            <div
+              key={character.characterId}
+              className="carousel-item"
+              onClick={() => handleCharacterClick(character)}
+            >
+              <div className="image-container">
+                <div className="character-name">{character.name}</div>
+                <img
+                  src={`https://localhost:7023/${character.imageUrl}`}
+                  alt={character.name}
+                  className="carousel-image"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        <button
+          className="carousel-button right"
+          onClick={() => scrollCarousel(1)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
+      </div>
       {selectedCharacter && (
         <div className="character-details">
-          <h2>{selectedCharacter.description}</h2>
           <img
             src={`https://localhost:7023/${selectedCharacter.imageUrl}`}
             alt={selectedCharacter.name}
             className="selected-image"
           />
           <p>{selectedCharacter.description}</p>
-          <p>Story: {selectedCharacter.story.title}</p>
+          <p>Story: {selectedCharacter.storyId}</p>
         </div>
       )}
     </div>
