@@ -139,3 +139,4 @@ F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\BCrypt.Net
 F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\backend.staticwebassets.runtime.json
 F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\DotNetEnv.dll
 F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\Sprache.dll
+F:\Programming Projects\Phase-2-2024\backend\backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

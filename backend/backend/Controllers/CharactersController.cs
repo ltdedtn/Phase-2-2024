@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using backend.Models;
+﻿using backend.Models;
 using backend.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class CharactersController : ControllerBase
     {
         private readonly ICharacterRepository _characterRepository;
@@ -21,11 +20,12 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-            return Ok(await _characterRepository.GetCharactersAsync());
+            var characters = await _characterRepository.GetCharactersAsync();
+            return Ok(characters);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<Character>> GetCharacterById(int id)
         {
             var character = await _characterRepository.GetCharacterByIdAsync(id);
             if (character == null)
@@ -34,48 +34,16 @@ namespace backend.Controllers
             }
             return Ok(character);
         }
+
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter([FromForm] CharacterCreate model)
+        public async Task<ActionResult> AddCharacter(Character character)
         {
-            try
-            {
-                var character = new Character
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    StoryId = model.StoryId,
-                    // Populate other fields as needed
-                };
-
-                if (model.ImageFile != null && model.ImageFile.Length > 0)
-                {
-                    // Generate a unique file name or use GUID
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFile.FileName);
-                    var filePath = Path.Combine("wwwroot", "images", fileName); // Example: Save to wwwroot/images folder
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await model.ImageFile.CopyToAsync(fileStream);
-                    }
-
-                    character.ImageUrl = "/images/" + fileName; // Store relative URL in database
-                }
-
-                await _characterRepository.AddCharacterAsync(character);
-
-                return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception for detailed debugging
-                Console.WriteLine($"Error creating character: {ex}");
-                return StatusCode(500, "Internal server error");
-            }
+            await _characterRepository.AddCharacterAsync(character);
+            return CreatedAtAction(nameof(GetCharacterById), new { id = character.CharacterId }, character);
         }
 
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        public async Task<ActionResult> UpdateCharacter(int id, Character character)
         {
             if (id != character.CharacterId)
             {
@@ -87,7 +55,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCharacter(int id)
+        public async Task<ActionResult> DeleteCharacter(int id)
         {
             await _characterRepository.DeleteCharacterAsync(id);
             return NoContent();

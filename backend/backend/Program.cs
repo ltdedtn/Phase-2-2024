@@ -8,6 +8,9 @@ using backend.Data;
 using backend.Repositories;
 using Microsoft.OpenApi.Models;
 using DotNetEnv;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +19,37 @@ Env.Load();
 
 // Retrieve environment variables
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
-var jwtToken = Environment.GetEnvironmentVariable("JWT_TOKEN");
+var jwtKey = Environment.GetEnvironmentVariable("jwt_token");
+
+// Check if the JWT key was retrieved properly
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new InvalidOperationException("JWT_KEY environment variable is not set.");
+}
+
+var jwtKeyBytes = Encoding.UTF8.GetBytes(jwtKey);
 
 // Build connection string
 var connectionString = $"Server=192.168.1.4,1433;Database=Phase 2;User Id=Ben;Password={dbPassword};Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;";
+
+// Add JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(jwtKeyBytes),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
 
 // Configure services
 builder.Services.AddControllers();
@@ -29,7 +59,6 @@ builder.Services.AddDbContext<BackendContext>(options =>
 // Register repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
-builder.Services.AddScoped<IScreenshotRepository, ScreenshotRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
 
@@ -72,6 +101,7 @@ app.UseRouting();
 // Enable CORS
 app.UseCors();
 
+app.UseAuthentication(); // Ensure authentication is enabled
 app.UseAuthorization();
 
 app.MapControllers();

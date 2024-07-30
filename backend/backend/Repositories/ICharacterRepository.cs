@@ -8,8 +8,8 @@ namespace backend.Repositories
     {
         Task<IEnumerable<Character>> GetCharactersAsync();
         Task<Character> GetCharacterByIdAsync(int id);
-        Task<Character> AddCharacterAsync(Character character);
-        Task<Character> UpdateCharacterAsync(Character character);
+        Task AddCharacterAsync(Character character);
+        Task UpdateCharacterAsync(Character character);
         Task DeleteCharacterAsync(int id);
     }
 }

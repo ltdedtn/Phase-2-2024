@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using backend.Data;
+﻿using backend.Data;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,19 +17,14 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<Story>> GetStoriesAsync()
         {
-            return await _context.Stories
-                .Include(s => s.Characters)
-                .Include(s => s.Screenshots)
-                .Include(s => s.StoryParts)
-                .ToListAsync();
+            return await _context.Stories.ToListAsync();
         }
 
         public async Task<Story> GetStoryByIdAsync(int id)
         {
             return await _context.Stories
-                .Include(s => s.Characters)
-                .Include(s => s.Screenshots)
                 .Include(s => s.StoryParts)
+                .Include(s => s.Characters)
                 .FirstOrDefaultAsync(s => s.StoryId == id);
         }
 
@@ -40,18 +35,20 @@ namespace backend.Repositories
             return story;
         }
 
-        public async Task<Story> UpdateStoryAsync(Story story)
+        public async Task UpdateStoryAsync(Story story)
         {
             _context.Entry(story).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return story;
         }
 
         public async Task DeleteStoryAsync(int id)
         {
             var story = await _context.Stories.FindAsync(id);
-            _context.Stories.Remove(story);
-            await _context.SaveChangesAsync();
+            if (story != null)
+            {
+                _context.Stories.Remove(story);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

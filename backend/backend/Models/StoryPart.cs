@@ -1,14 +1,17 @@
-﻿using backend.Models;
+﻿using System;
+using System.Collections.Generic;
 
-public class StoryPart
+namespace backend.Models
 {
-    public int PartId { get; set; }
-    public string Content { get; set; }
-    public int StoryId { get; set; }
-    public int CharacterId { get; set; }
+    public class StoryPart
+    {
+        public int PartId { get; set; } // This should be the primary key
+        public string Content { get; set; }
+        public int StoryId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string ImageUrl { get; set; }
 
-    public DateTime CreatedAt { get; set; }
-
-    public virtual Character Character { get; set; }
-    public virtual Story Story { get; set; }
+        public Story Story { get; set; }
+        public ICollection<StoryPartCharacter> StoryPartCharacters { get; set; }
+    }
 }

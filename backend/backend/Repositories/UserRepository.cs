@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using backend.Data;
+﻿using backend.Data;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +22,9 @@ namespace backend.Repositories
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users
+                .Include(u => u.Stories)
+                .FirstOrDefaultAsync(u => u.UserId == id);
         }
 
         public async Task<User> AddUserAsync(User user)
@@ -32,18 +34,20 @@ namespace backend.Repositories
             return user;
         }
 
-        public async Task<User> UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user)
         {
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return user;
         }
 
         public async Task DeleteUserAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

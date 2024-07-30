@@ -9,7 +9,7 @@ namespace backend.Repositories
         Task<IEnumerable<Story>> GetStoriesAsync();
         Task<Story> GetStoryByIdAsync(int id);
         Task<Story> AddStoryAsync(Story story);
-        Task<Story> UpdateStoryAsync(Story story);
+        Task UpdateStoryAsync(Story story);
         Task DeleteStoryAsync(int id);
     }
 }

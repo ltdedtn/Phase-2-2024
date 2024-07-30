@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using backend.Data;
+﻿using backend.Data;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,50 +17,30 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<Character>> GetCharactersAsync()
         {
-            var characters = await _context.Characters
-                .Include(c => c.StoryParts)
-                .Include(c => c.Screenshots)
+            return await _context.Characters
+                .Include(c => c.StoryPartCharacters)
+                .ThenInclude(spc => spc.StoryPart)
                 .ToListAsync();
-
-            // Handle null values in properties like ImageUrl
-            characters.ForEach(c =>
-            {
-                c.ImageUrl ??= ""; // Set ImageUrl to empty string if null (C# 8.0 or later)
-                // Add additional handling for other properties if needed
-            });
-
-            return characters;
         }
 
         public async Task<Character> GetCharacterByIdAsync(int id)
         {
-            var character = await _context.Characters
-                .Include(c => c.StoryParts)
-                .Include(c => c.Screenshots)
+            return await _context.Characters
+                .Include(c => c.StoryPartCharacters)
+                .ThenInclude(spc => spc.StoryPart)
                 .FirstOrDefaultAsync(c => c.CharacterId == id);
-
-            if (character != null)
-            {
-                // Handle null values in properties like ImageUrl
-                character.ImageUrl ??= ""; // Set ImageUrl to empty string if null (C# 8.0 or later)
-                // Add additional handling for other properties if needed
-            }
-
-            return character;
         }
 
-        public async Task<Character> AddCharacterAsync(Character character)
+        public async Task AddCharacterAsync(Character character)
         {
-            _context.Characters.Add(character);
+            await _context.Characters.AddAsync(character);
             await _context.SaveChangesAsync();
-            return character;
         }
 
-        public async Task<Character> UpdateCharacterAsync(Character character)
+        public async Task UpdateCharacterAsync(Character character)
         {
-            _context.Entry(character).State = EntityState.Modified;
+            _context.Characters.Update(character);
             await _context.SaveChangesAsync();
-            return character;
         }
 
         public async Task DeleteCharacterAsync(int id)

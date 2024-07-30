@@ -1,15 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import AddStoryPartModal from "./AddStoryPartModal"; // Import the modal component
+
+interface StoryPart {
+  partId: number;
+  content: string;
+  storyId: number;
+  characterId: number;
+  createdAt: string;
+}
 
 interface Character {
   characterId: number;
   name: string;
   description: string;
   storyId: number;
-  story: {
-    title: string;
-  };
   imageUrl: string;
+  storyParts: StoryPart[];
 }
 
 const CharacterDash = () => {
@@ -17,8 +24,10 @@ const CharacterDash = () => {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null
   );
+  const [selectedStoryParts, setSelectedStoryParts] = useState<StoryPart[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +51,51 @@ const CharacterDash = () => {
 
   const handleCharacterClick = (character: Character) => {
     setSelectedCharacter(character);
+    setSelectedStoryParts(character.storyParts);
+  };
+
+  const handleDelete = async (characterId: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this character?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          `https://localhost:7023/api/Characters/${characterId}`
+        );
+        setCharacters(
+          characters.filter(
+            (character) => character.characterId !== characterId
+          )
+        );
+        setSelectedCharacter(null);
+        setSelectedStoryParts([]);
+      } catch (error) {
+        console.error("Error deleting character", error);
+        setError("Failed to delete character. Please try again later.");
+      }
+    }
+  };
+
+  const handleAddStoryPartClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleStoryPartAdded = () => {
+    if (selectedCharacter) {
+      const fetchStoryParts = async () => {
+        try {
+          const response = await axios.get<StoryPart[]>(
+            `https://localhost:7023/api/StoryParts?characterId=${selectedCharacter.characterId}`
+          );
+          setSelectedStoryParts(response.data);
+        } catch (error) {
+          console.error("Error fetching story parts", error);
+        }
+      };
+
+      fetchStoryParts();
+    }
   };
 
   const scrollCarousel = (direction: number) => {
@@ -94,7 +148,7 @@ const CharacterDash = () => {
               <div className="image-container">
                 <div className="character-name">{character.name}</div>
                 <img
-                  src={`https://localhost:7023/${character.imageUrl}`}
+                  src={`https://localhost:7023${character.imageUrl}`}
                   alt={character.name}
                   className="carousel-image"
                 />
@@ -125,13 +179,46 @@ const CharacterDash = () => {
       {selectedCharacter && (
         <div className="character-details">
           <img
-            src={`https://localhost:7023/${selectedCharacter.imageUrl}`}
+            src={`https://localhost:7023${selectedCharacter.imageUrl}`}
             alt={selectedCharacter.name}
             className="selected-image"
           />
           <p>{selectedCharacter.description}</p>
-          <p>Story: {selectedCharacter.storyId}</p>
+          {selectedStoryParts.length > 0 ? (
+            selectedStoryParts.map((storyPart) => (
+              <p key={storyPart.partId}>
+                Story {storyPart.storyId} - Episode {storyPart.partId}:{" "}
+                {storyPart.content}
+              </p>
+            ))
+          ) : (
+            <p>No story parts available</p>
+          )}
+          <div>
+            <button
+              className="font-bold py-2 px-4 rounded"
+              onClick={handleAddStoryPartClick}
+            >
+              Add Story Parts
+            </button>
+            <button
+              className="font-bold py-2 px-4 rounded"
+              onClick={() =>
+                selectedCharacter?.characterId &&
+                handleDelete(selectedCharacter.characterId)
+              }
+            >
+              Delete Character
+            </button>
+          </div>
         </div>
+      )}
+      {isModalOpen && selectedCharacter && (
+        <AddStoryPartModal
+          characterId={selectedCharacter.characterId}
+          onClose={() => setIsModalOpen(false)}
+          onStoryPartAdded={handleStoryPartAdded}
+        />
       )}
     </div>
   );

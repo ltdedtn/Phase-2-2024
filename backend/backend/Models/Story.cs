@@ -9,10 +9,11 @@ namespace backend.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
+        public string ImageUrl { get; set; }
+
         public User User { get; set; }
         public ICollection<Character> Characters { get; set; }
-        public ICollection<Screenshot> Screenshots { get; set; }
         public ICollection<StoryPart> StoryParts { get; set; }
     }
 }

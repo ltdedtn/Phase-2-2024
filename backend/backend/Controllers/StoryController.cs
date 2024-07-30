@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
+using backend.DTOs;
+using backend.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
@@ -11,96 +14,79 @@ namespace backend.Controllers
     [ApiController]
     public class StoryController : ControllerBase
     {
-        private readonly BackendContext _context;
+        private readonly IStoryRepository _storyRepository;
 
-        public StoryController(BackendContext context)
+        public StoryController(IStoryRepository storyRepository)
         {
-            _context = context;
+            _storyRepository = storyRepository;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Story>>> GetStories()
         {
-            return await _context.Stories
-                
-                .Include(s => s.Screenshots)
-                .Include(s => s.StoryParts)
-                .ToListAsync();
+            return Ok(await _storyRepository.GetStoriesAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Story>> GetStory(int id)
         {
-            var story = await _context.Stories
-                .Include(s => s.Characters)
-                .Include(s => s.Screenshots)
-                .Include(s => s.StoryParts)
-                .FirstOrDefaultAsync(s => s.StoryId == id);
+            var story = await _storyRepository.GetStoryByIdAsync(id);
+            if (story == null)
+            {
+                return NotFound();
+            }
+            return Ok(story);
+        }
 
+        [HttpPost]
+        public async Task<ActionResult<Story>> PostStory(StoryCreateDto storyDto)
+        {
+            var story = new Story
+            {
+                Title = storyDto.Title,
+                Description = storyDto.Description,
+                ImageUrl = storyDto.ImageUrl,
+                CreatedAt = DateTime.UtcNow,
+                UserId = storyDto.UserId
+            };
+
+            var createdStory = await _storyRepository.AddStoryAsync(story);
+            return CreatedAtAction(nameof(GetStory), new { id = createdStory.StoryId }, createdStory);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutStory(int id, StoryUpdateDto storyDto)
+        {
+            if (id != storyDto.StoryId)
+            {
+                return BadRequest("Story ID mismatch");
+            }
+
+            var story = await _storyRepository.GetStoryByIdAsync(id);
             if (story == null)
             {
                 return NotFound();
             }
 
-            return story;
-        }
+            story.Title = storyDto.Title;
+            story.Description = storyDto.Description;
+            story.ImageUrl = storyDto.ImageUrl;
 
-        [HttpPost]
-        public async Task<ActionResult<Story>> PostStory(Story story)
-        {
-            _context.Stories.Add(story);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetStory), new { id = story.StoryId }, story);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStory(int id, Story story)
-        {
-            if (id != story.StoryId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(story).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _storyRepository.UpdateStoryAsync(story);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStory(int id)
         {
-            var story = await _context.Stories.FindAsync(id);
+            var story = await _storyRepository.GetStoryByIdAsync(id);
             if (story == null)
             {
                 return NotFound();
             }
 
-            _context.Stories.Remove(story);
-            await _context.SaveChangesAsync();
-
+            await _storyRepository.DeleteStoryAsync(id);
             return NoContent();
-        }
-
-        private bool StoryExists(int id)
-        {
-            return _context.Stories.Any(e => e.StoryId == id);
         }
     }
 }
