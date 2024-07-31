@@ -7,9 +7,9 @@ namespace backend.Models
     {
         public int StoryPartId { get; set; }
         [JsonIgnore]
-        public StoryPart StoryPart { get; set; } = new StoryPart(); // Ensure non-nullable
+        public StoryPart StoryPart { get; set; } 
         public int CharacterId { get; set; }
         [JsonIgnore]
-        public Character Character { get; set; } = new Character(); // Ensure non-nullable
+        public Character Character { get; set; }
     }
 }

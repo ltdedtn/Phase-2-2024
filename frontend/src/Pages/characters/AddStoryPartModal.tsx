@@ -83,15 +83,24 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
     }
 
     try {
-      await axios.post("https://localhost:7023/api/StoryParts/AddCharacters", {
-        storyPartId: selectedStoryPartId,
-        characterIds: [characterId],
-      });
-      onStoryPartAdded(); // Notify parent component to refresh the story parts
-      onClose(); // Close the modal
+      const response = await axios.post(
+        "https://localhost:7023/api/StoryParts/linkCharacterToStoryPart",
+        {
+          storyPartId: selectedStoryPartId,
+          characterId: characterId,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Character linked to story part successfully.");
+        onStoryPartAdded(); // Notify parent component to refresh the story parts
+        onClose(); // Close the modal
+      } else {
+        setError("Failed to link character to story part. Please try again.");
+      }
     } catch (error) {
-      console.error("Error adding character to story part", error);
-      setError("Failed to add story part. Please try again.");
+      console.error("Error linking character to story part", error);
+      setError("Failed to link character to story part. Please try again.");
     }
   };
 

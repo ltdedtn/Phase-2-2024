@@ -7,8 +7,10 @@ interface StoryPart {
   partId: number;
   content: string;
   storyId: number;
-  characterId: number;
   createdAt: string;
+  imageUrl: string;
+  story?: any;
+  storyPartCharacters?: any[];
 }
 
 interface Character {
@@ -17,7 +19,7 @@ interface Character {
   description: string;
   storyId: number;
   imageUrl: string;
-  storyParts: StoryPart[];
+  storyParts?: StoryPart[];
 }
 
 const CharacterDash: React.FC = () => {
@@ -39,7 +41,7 @@ const CharacterDash: React.FC = () => {
         const response = await axios.get<Character[]>(
           "https://localhost:7023/api/Characters"
         );
-        setCharacters(response.data || []); // Ensure data is an array
+        setCharacters(response.data || []);
       } catch (error) {
         console.error("Error fetching characters", error);
         setError("Failed to fetch characters. Please try again later.");
@@ -51,20 +53,40 @@ const CharacterDash: React.FC = () => {
     fetchCharacters();
   }, []);
 
+  useEffect(() => {
+    if (selectedCharacter) {
+      console.log(
+        `Fetching story parts for character ${selectedCharacter.characterId}`
+      );
+      fetchStoryParts(selectedCharacter.characterId);
+    }
+  }, [selectedCharacter]);
+
   const fetchStoryParts = async (characterId: number) => {
     try {
       const response = await axios.get<StoryPart[]>(
-        `https://localhost:7023/api/StoryParts/ByCharacter/${characterId}`
+        `https://localhost:7023/api/Characters/${characterId}/storyparts`
       );
-      setSelectedStoryParts(response.data || []); // Ensure data is an array
+
+      if (response.status === 200) {
+        setSelectedStoryParts(response.data || []);
+      } else {
+        console.error("Unexpected status code:", response.status);
+        setError("Failed to fetch story parts. Please try again later.");
+      }
     } catch (error) {
-      console.error("Error fetching story parts", error);
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        console.log("No story parts found for character:", characterId);
+        setSelectedStoryParts([]);
+      } else {
+        console.error("Error fetching story parts", error);
+        setError("Failed to fetch story parts. Please try again later.");
+      }
     }
   };
 
   const handleCharacterClick = (character: Character) => {
     setSelectedCharacter(character);
-    fetchStoryParts(character.characterId); // Fetch story parts when character is selected
   };
 
   const handleDelete = async (characterId: number) => {
@@ -100,7 +122,7 @@ const CharacterDash: React.FC = () => {
 
   const handleStoryPartAdded = () => {
     if (selectedCharacter) {
-      fetchStoryParts(selectedCharacter.characterId); // Refresh story parts after adding new one
+      fetchStoryParts(selectedCharacter.characterId);
     }
   };
 
@@ -196,7 +218,7 @@ const CharacterDash: React.FC = () => {
             className="selected-image"
           />
           <p>{selectedCharacter.description}</p>
-          {selectedStoryParts && selectedStoryParts.length > 0 ? (
+          {selectedStoryParts.length > 0 ? (
             selectedStoryParts.map((storyPart) => (
               <p key={storyPart.partId}>
                 Story {storyPart.storyId} - Episode {storyPart.partId}:{" "}

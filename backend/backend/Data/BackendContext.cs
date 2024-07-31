@@ -19,7 +19,6 @@ namespace backend.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         {
-            // Configure the many-to-many relationship between StoryPart and Character
             modelBuilder.Entity<StoryPartCharacter>()
                 .HasKey(spc => new { spc.StoryPartId, spc.CharacterId });
 
@@ -27,13 +26,13 @@ namespace backend.Data
                 .HasOne(spc => spc.StoryPart)
                 .WithMany(sp => sp.StoryPartCharacters)
                 .HasForeignKey(spc => spc.StoryPartId)
-                .OnDelete(DeleteBehavior.Cascade); // Enable cascading delete on StoryPart
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<StoryPartCharacter>()
                 .HasOne(spc => spc.Character)
                 .WithMany(c => c.StoryPartCharacters)
                 .HasForeignKey(spc => spc.CharacterId)
-                .OnDelete(DeleteBehavior.Cascade); // Enable cascading delete on Character
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Configure the primary key for StoryPart
             modelBuilder.Entity<StoryPart>()

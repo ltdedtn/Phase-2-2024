@@ -97,11 +97,53 @@ namespace backend.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId) // Add this method
+        public async Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId) 
         {
             return await _context.StoryParts
                 .Where(sp => sp.StoryPartCharacters.Any(spc => spc.CharacterId == characterId))
                 .ToListAsync();
         }
+        // StoryPartRepository.cs
+
+        public async Task<bool> LinkCharacterToStoryPartAsync(int storyPartId, int characterId)
+        {
+            try
+            {
+                Console.WriteLine($"Linking Character {characterId} to StoryPart {storyPartId}");
+
+                var storyPart = await _context.StoryParts.FindAsync(storyPartId);
+                var character = await _context.Characters.FindAsync(characterId);
+
+                Console.WriteLine($"StoryPart: {storyPart?.ToString() ?? "Not Found"}");
+                Console.WriteLine($"Character: {character?.ToString() ?? "Not Found"}");
+
+                if (storyPart == null || character == null)
+                {
+                    Console.WriteLine("Either StoryPart or Character not found.");
+                    return false;
+                }
+
+                var storyPartCharacter = new StoryPartCharacter
+                {
+                    StoryPartId = storyPartId,
+                    CharacterId = characterId
+                };
+
+                Console.WriteLine($"Adding StoryPartCharacter: {storyPartCharacter.StoryPartId}, {storyPartCharacter.CharacterId}");
+                _context.StoryPartCharacters.Add(storyPartCharacter);
+
+                await _context.SaveChangesAsync();
+
+                Console.WriteLine("Successfully linked Character to StoryPart.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error linking Character to StoryPart: {ex.Message}");
+                return false;
+            }
+        }
+
+
     }
 }

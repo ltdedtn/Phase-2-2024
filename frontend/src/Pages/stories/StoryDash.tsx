@@ -66,7 +66,6 @@ const StoryDash = () => {
         const response = await axios.get<Story[]>(
           "https://localhost:7023/api/Story"
         );
-        console.log("Fetched stories:", response.data);
         setStories(response.data);
       } catch (error) {
         console.error("Error fetching stories", error);
@@ -86,7 +85,6 @@ const StoryDash = () => {
           const response = await axios.get<StoryPart[]>(
             `https://localhost:7023/api/StoryParts/ByStory/${selectedStory.storyId}`
           );
-          console.log("Fetched story parts:", response.data);
           setStoryParts(response.data);
         } catch (error) {
           console.error("Error fetching story parts", error);

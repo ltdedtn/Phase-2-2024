@@ -11,9 +11,9 @@ namespace backend.Repositories
         Task<StoryPart> AddStoryPartAsync(StoryPart storyPart);
         Task UpdateStoryPartAsync(StoryPart storyPart);
         Task DeleteStoryPartAsync(int id);
-        Task<bool> AddCharactersToStoryPartAsync(int storyPartId, IEnumerable<int> characterIds);
         Task<bool> StoryPartExistsAsync(int id);
         Task<IEnumerable<StoryPart>> GetStoryPartsByStoryIdAsync(int storyId);
-        Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId); // Add this line
+        Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId);
+        Task<bool> LinkCharacterToStoryPartAsync(int storyPartId, int characterId);
     }
 }
