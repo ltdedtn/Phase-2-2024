@@ -138,5 +138,16 @@ namespace backend.Controllers
 
             return Ok("Character linked to story part successfully.");
         }
+        [HttpGet("ByStory/{storyId}")]
+        public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByStoryId(int storyId)
+        {
+            var storyParts = await _storyPartRepository.GetStoryPartsByStoryIdAsync(storyId);
+            if (storyParts == null || !storyParts.Any())
+            {
+                return Ok(new List<StoryPart>());
+            }
+
+            return Ok(storyParts);
+        }
     }
 }

@@ -1,13 +1,8 @@
+// src/Pages/users/UserDash.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-interface User {
-  userId: number;
-  username: string;
-  email: string;
-  createdAt: string;
-}
+import { User } from "../../models/User";
 
 const UserDash = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -21,7 +16,6 @@ const UserDash = () => {
         const response = await axios.get<User[]>(
           "https://localhost:7023/api/User"
         );
-
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users", error);

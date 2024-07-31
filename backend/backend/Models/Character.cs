@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
@@ -9,7 +10,7 @@ namespace backend.Models
         public string? Description { get; set; } // Nullable
         public int? StoryId { get; set; } // Nullable
         public string? ImageUrl { get; set; } // Nullable
-
+        [JsonIgnore]
         public Story? Story { get; set; } // Nullable
         public ICollection<StoryPartCharacter> StoryPartCharacters { get; set; } = new List<StoryPartCharacter>();
     }

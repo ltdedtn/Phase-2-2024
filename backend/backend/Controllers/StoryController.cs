@@ -7,6 +7,7 @@ using backend.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controllers
 {
@@ -48,12 +49,11 @@ namespace backend.Controllers
                     Title = storyDto.Title,
                     Description = storyDto.Description,
                     CreatedAt = DateTime.UtcNow,
-                    UserId = storyDto.UserId
+                    UserId = storyDto.UserId // Directly assign the nullable int
                 };
 
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Generate a unique file name or use GUID
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
                     var filePath = Path.Combine("wwwroot", "images", fileName); // Save to wwwroot/images folder
 
@@ -70,11 +70,12 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception for detailed debugging
                 Console.WriteLine($"Error creating story: {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }
+
+
 
 
         [HttpPut("{id}")]

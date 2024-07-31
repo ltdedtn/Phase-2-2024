@@ -48,7 +48,7 @@ namespace backend.Controllers
 
             if (storyParts == null || !storyParts.Any())
             {
-                return NotFound();
+                return Ok(new List<StoryPart>());
             }
 
             return Ok(storyParts);
@@ -59,35 +59,40 @@ namespace backend.Controllers
         {
             try
             {
+                // Create a new Character instance from the DTO
                 var character = new Character
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    StoryId = model.StoryId ?? 0,
-                    // Populate other fields as needed
+                    StoryId = model.StoryId
                 };
 
+                // Handle the uploaded image file if it exists
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Generate a unique file name or use GUID
+                    // Generate a unique file name
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                    var filePath = Path.Combine("wwwroot", "images", fileName); // Save to wwwroot/images folder
+                    var filePath = Path.Combine("wwwroot", "images", fileName); // Path where the file will be saved
 
+                    // Save the file to the server
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(fileStream);
                     }
 
-                    character.ImageUrl = "/images/" + fileName; // Store relative URL in database
+                    // Store the relative URL of the uploaded image
+                    character.ImageUrl = "/images/" + fileName;
                 }
 
-                await _characterRepository.AddCharacterAsync(character);
+                // Save the new character to the database
+                var createdCharacter = await _characterRepository.AddCharacterAsync(character);
 
-                return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
+                // Return a response indicating the character was created successfully
+                return CreatedAtAction(nameof(GetCharacter), new { id = createdCharacter.CharacterId }, createdCharacter);
             }
             catch (Exception ex)
             {
-                // Log the exception for detailed debugging
+                // Log the exception and return a 500 Internal Server Error
                 Console.WriteLine($"Error creating character: {ex}");
                 return StatusCode(500, "Internal server error");
             }

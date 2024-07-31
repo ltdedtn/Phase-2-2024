@@ -1,54 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-interface StoryPartCharacter {
-  storyPartId: number;
-  characterId: number;
-  storyPart: string;
-  character: string;
-}
-
-interface StoryPart {
-  partId: number;
-  content: string;
-  storyId: number;
-  createdAt: string;
-  imageUrl: string;
-  story: string;
-  storyPartCharacters: StoryPartCharacter[];
-}
-
-interface Character {
-  characterId: number;
-  name: string;
-  description: string;
-  storyId: number;
-  imageUrl: string;
-  story: string;
-  storyPartCharacters: StoryPartCharacter[];
-}
-
-interface User {
-  userId: number;
-  username: string;
-  passwordHash: string;
-  email: string;
-  createdAt: string;
-  stories: string[];
-}
-
-interface Story {
-  storyId: number;
-  title: string;
-  description: string;
-  createdAt: string;
-  userId: number;
-  imageUrl: string;
-  user: User | null;
-  characters: Character[];
-  storyParts: StoryPart[];
-}
+import { Story } from "../../models/Story";
+import { StoryPart } from "../../models/StoryPart";
 
 const StoryDash = () => {
   const [stories, setStories] = useState<Story[]>([]);
@@ -70,6 +24,7 @@ const StoryDash = () => {
       } catch (error) {
         console.error("Error fetching stories", error);
         setError("Failed to fetch stories. Please try again later.");
+        setStories([]); // Ensure stories is an empty array on error
       } finally {
         setLoading(false);
       }
@@ -82,13 +37,17 @@ const StoryDash = () => {
     if (selectedStory) {
       const fetchStoryParts = async () => {
         try {
-          const response = await axios.get<StoryPart[]>(
-            `https://localhost:7023/api/StoryParts/ByStory/${selectedStory.storyId}`
-          );
+          const url = `https://localhost:7023/api/StoryParts/ByStory/${selectedStory.storyId}`;
+          const response = await axios.get<StoryPart[]>(url);
           setStoryParts(response.data);
         } catch (error) {
-          console.error("Error fetching story parts", error);
-          setError("Failed to fetch story parts. Please try again later.");
+          if (axios.isAxiosError(error) && error.response?.status === 404) {
+            console.warn("Story parts not found for the selected story.");
+            setStoryParts([]);
+          } else {
+            console.error("Error fetching story parts", error);
+            setError("Failed to fetch story parts. Please try again later.");
+          }
         }
       };
 

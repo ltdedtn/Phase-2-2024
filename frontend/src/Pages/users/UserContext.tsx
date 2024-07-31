@@ -1,9 +1,6 @@
+// src/context/UserContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
-interface UserContextType {
-  username: string | null;
-  setUsername: React.Dispatch<React.SetStateAction<string | null>>;
-}
+import { UserContextType } from "../../context/UserContextTypes";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 

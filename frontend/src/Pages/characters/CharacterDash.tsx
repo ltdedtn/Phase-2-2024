@@ -1,26 +1,9 @@
+// CharacterDash.tsx
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import AddStoryPartModal from "./AddStoryPartModal"; // Import the modal component
 import { useNavigate } from "react-router-dom";
-
-interface StoryPart {
-  partId: number;
-  content: string;
-  storyId: number;
-  createdAt: string;
-  imageUrl: string;
-  story?: any;
-  storyPartCharacters?: any[];
-}
-
-interface Character {
-  characterId: number;
-  name: string;
-  description: string;
-  storyId: number;
-  imageUrl: string;
-  storyParts?: StoryPart[];
-}
+import { StoryPart, Character } from "../../models/Character";
 
 const CharacterDash: React.FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -66,7 +49,17 @@ const CharacterDash: React.FC = () => {
       );
 
       if (response.status === 200) {
-        setSelectedStoryParts(response.data || []);
+        const storyParts = response.data || [];
+        const updatedStoryParts = await Promise.all(
+          storyParts.map(async (storyPart) => {
+            const storyResponse = await axios.get(
+              `https://localhost:7023/api/Story/${storyPart.storyId}`
+            );
+            const storyTitle = storyResponse.data.title;
+            return { ...storyPart, storyTitle };
+          })
+        );
+        setSelectedStoryParts(updatedStoryParts);
       } else {
         console.error("Unexpected status code:", response.status);
         setError("Failed to fetch story parts. Please try again later.");
@@ -184,7 +177,7 @@ const CharacterDash: React.FC = () => {
             className="create-story-button py-2 px-4 rounded ml-4"
             onClick={handleCreateCharacter}
           >
-            Add New Story
+            Add New Character
           </button>
         </div>
         <button
@@ -218,7 +211,7 @@ const CharacterDash: React.FC = () => {
           {selectedStoryParts.length > 0 ? (
             selectedStoryParts.map((storyPart) => (
               <p key={storyPart.partId}>
-                StoryId {storyPart.storyId} - {storyPart.content}
+                {storyPart.storyTitle} - {storyPart.content}
               </p>
             ))
           ) : (

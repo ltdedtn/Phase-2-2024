@@ -5,30 +5,10 @@ import { useNavigate } from "react-router-dom";
 const NewStory = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [userId, setUserId] = useState<number | "">(0);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
   const [error, setError] = useState<string | null>(null);
-  const [users, setUsers] = useState<{ userId: number; username: string }[]>(
-    []
-  ); // For dropdown
   const navigate = useNavigate();
-
-  // Fetch available users for the dropdown
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("https://localhost:7023/api/User");
-      setUsers(response.data);
-    } catch (error) {
-      console.error("Error fetching users", error);
-      setError("Failed to fetch users. Please try again.");
-    }
-  };
-
-  // Load users on component mount
-  React.useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -37,13 +17,14 @@ const NewStory = () => {
       setImagePreview(URL.createObjectURL(file)); // Set preview URL
     }
   };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("userId", userId.toString());
+      formData.append("userId", ""); // Sending an empty string to represent null
       if (imageFile) {
         formData.append("imageFile", imageFile); // Ensure this key matches the backend parameter name
       }
@@ -90,25 +71,6 @@ const NewStory = () => {
             rows={4}
             required
           ></textarea>
-        </div>
-        <div className="form-control">
-          <label htmlFor="userId" className="label">
-            <span className="label-text">User</span>
-          </label>
-          <select
-            id="userId"
-            value={userId}
-            onChange={(e) => setUserId(Number(e.target.value))}
-            className="select select-bordered w-full"
-            required
-          >
-            <option value="">Select a User</option>
-            {users.map((user) => (
-              <option key={user.userId} value={user.userId}>
-                {user.username}
-              </option>
-            ))}
-          </select>
         </div>
         <div className="form-control">
           <label htmlFor="image" className="label">

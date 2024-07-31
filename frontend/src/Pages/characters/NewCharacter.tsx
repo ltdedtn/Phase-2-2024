@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 const NewCharacter = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [storyId, setStoryId] = useState<number>(0);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null); // State for image preview
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -15,7 +14,7 @@ const NewCharacter = () => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setImageFile(file);
-      setImagePreview(URL.createObjectURL(file)); // Set preview URL
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -25,9 +24,9 @@ const NewCharacter = () => {
       const formData = new FormData();
       formData.append("Name", name);
       formData.append("Description", description || "");
-      formData.append("StoryId", storyId.toString());
+      // Omit StoryId from the form data
       if (imageFile) {
-        formData.append("imageFile", imageFile); // Make sure this key matches what your backend expects
+        formData.append("imageFile", imageFile);
       }
 
       await axios.post("https://localhost:7023/api/Characters", formData, {
@@ -73,19 +72,6 @@ const NewCharacter = () => {
             rows={4}
             required
           ></textarea>
-        </div>
-        <div className="form-control">
-          <label htmlFor="storyId" className="label">
-            <span className="label-text">Story ID</span>
-          </label>
-          <input
-            type="number"
-            id="storyId"
-            value={storyId}
-            onChange={(e) => setStoryId(Number(e.target.value))}
-            className="input input-bordered w-full"
-            required
-          />
         </div>
         <div className="form-control">
           <label htmlFor="image" className="label">

@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Story } from "../../models/Story";
+import { StoryPart } from "../../models/StoryPart";
 
 interface AddStoryPartModalProps {
   characterId: number;
   onClose: () => void;
   onStoryPartAdded: () => void;
-}
-
-interface Story {
-  storyId: number;
-  title: string;
-}
-
-interface StoryPart {
-  partId: number;
-  content: string;
-  storyId: number;
 }
 
 const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
@@ -61,7 +52,6 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
           const response = await axios.get<StoryPart[]>(
             `https://localhost:7023/api/StoryParts?storyId=${selectedStoryId}`
           );
-          console.log(response.data);
           setStoryParts(response.data);
         } catch (error) {
           console.error("Error fetching story parts", error);
