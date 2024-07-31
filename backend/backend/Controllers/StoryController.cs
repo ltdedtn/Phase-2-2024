@@ -39,20 +39,43 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Story>> PostStory(StoryCreateDto storyDto)
+        public async Task<ActionResult<Story>> PostStory([FromForm] StoryCreateDto storyDto, [FromForm] IFormFile imageFile)
         {
-            var story = new Story
+            try
             {
-                Title = storyDto.Title,
-                Description = storyDto.Description,
-                ImageUrl = storyDto.ImageUrl,
-                CreatedAt = DateTime.UtcNow,
-                UserId = storyDto.UserId
-            };
+                var story = new Story
+                {
+                    Title = storyDto.Title,
+                    Description = storyDto.Description,
+                    CreatedAt = DateTime.UtcNow,
+                    UserId = storyDto.UserId
+                };
 
-            var createdStory = await _storyRepository.AddStoryAsync(story);
-            return CreatedAtAction(nameof(GetStory), new { id = createdStory.StoryId }, createdStory);
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Generate a unique file name or use GUID
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine("wwwroot", "images", fileName); // Save to wwwroot/images folder
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+
+                    story.ImageUrl = "/images/" + fileName; // Store relative URL in database
+                }
+
+                var createdStory = await _storyRepository.AddStoryAsync(story);
+                return CreatedAtAction(nameof(GetStory), new { id = createdStory.StoryId }, createdStory);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for detailed debugging
+                Console.WriteLine($"Error creating story: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStory(int id, StoryUpdateDto storyDto)

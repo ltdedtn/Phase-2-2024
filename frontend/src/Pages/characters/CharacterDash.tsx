@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import AddStoryPartModal from "./AddStoryPartModal"; // Import the modal component
+import { useNavigate } from "react-router-dom";
 
 interface StoryPart {
   partId: number;
@@ -19,7 +20,7 @@ interface Character {
   storyParts: StoryPart[];
 }
 
-const CharacterDash = () => {
+const CharacterDash: React.FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null
@@ -30,6 +31,7 @@ const CharacterDash = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const carouselRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -37,7 +39,7 @@ const CharacterDash = () => {
         const response = await axios.get<Character[]>(
           "https://localhost:7023/api/Characters"
         );
-        setCharacters(response.data);
+        setCharacters(response.data || []); // Ensure data is an array
       } catch (error) {
         console.error("Error fetching characters", error);
         setError("Failed to fetch characters. Please try again later.");
@@ -49,9 +51,20 @@ const CharacterDash = () => {
     fetchCharacters();
   }, []);
 
+  const fetchStoryParts = async (characterId: number) => {
+    try {
+      const response = await axios.get<StoryPart[]>(
+        `https://localhost:7023/api/StoryParts/ByCharacter/${characterId}`
+      );
+      setSelectedStoryParts(response.data || []); // Ensure data is an array
+    } catch (error) {
+      console.error("Error fetching story parts", error);
+    }
+  };
+
   const handleCharacterClick = (character: Character) => {
     setSelectedCharacter(character);
-    setSelectedStoryParts(character.storyParts);
+    fetchStoryParts(character.characterId); // Fetch story parts when character is selected
   };
 
   const handleDelete = async (characterId: number) => {
@@ -77,24 +90,17 @@ const CharacterDash = () => {
     }
   };
 
+  const handleCreateCharacter = () => {
+    navigate("/characters/new");
+  };
+
   const handleAddStoryPartClick = () => {
     setIsModalOpen(true);
   };
 
   const handleStoryPartAdded = () => {
     if (selectedCharacter) {
-      const fetchStoryParts = async () => {
-        try {
-          const response = await axios.get<StoryPart[]>(
-            `https://localhost:7023/api/StoryParts?characterId=${selectedCharacter.characterId}`
-          );
-          setSelectedStoryParts(response.data);
-        } catch (error) {
-          console.error("Error fetching story parts", error);
-        }
-      };
-
-      fetchStoryParts();
+      fetchStoryParts(selectedCharacter.characterId); // Refresh story parts after adding new one
     }
   };
 
@@ -155,6 +161,12 @@ const CharacterDash = () => {
               </div>
             </div>
           ))}
+          <button
+            className="create-story-button py-2 px-4 rounded ml-4"
+            onClick={handleCreateCharacter}
+          >
+            Add New Story
+          </button>
         </div>
         <button
           className="carousel-button right"
@@ -184,7 +196,7 @@ const CharacterDash = () => {
             className="selected-image"
           />
           <p>{selectedCharacter.description}</p>
-          {selectedStoryParts.length > 0 ? (
+          {selectedStoryParts && selectedStoryParts.length > 0 ? (
             selectedStoryParts.map((storyPart) => (
               <p key={storyPart.partId}>
                 Story {storyPart.storyId} - Episode {storyPart.partId}:{" "}

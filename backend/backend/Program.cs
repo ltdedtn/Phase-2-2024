@@ -62,6 +62,8 @@ builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IStoryPartRepository, StoryPartRepository>();
 
+
+
 // Configure CORS
 builder.Services.AddCors(options =>
 {

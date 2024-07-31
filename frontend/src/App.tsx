@@ -12,6 +12,7 @@ import CharacterDash from "./Pages/characters/CharacterDash";
 import EditCharacter from "./Pages/characters/EditCharacter";
 import EditStory from "./Pages/stories/EditStory";
 import NewStory from "./Pages/stories/NewStory";
+import NewStoryPart from "./Pages/stories/NewStoryPart";
 import NewCharacter from "./Pages/characters/NewCharacter";
 import { UserProvider } from "./Pages/users/UserContext";
 
@@ -33,6 +34,7 @@ function App() {
               <Route path="/stories" element={<StoryDash />} />
               <Route path="/stories/new" element={<NewStory />} />
               <Route path="/stories/:storyId/edit" element={<EditStory />} />
+              <Route path="/storyPart/new" element={<NewStoryPart />} />
               <Route path="/characters" element={<CharacterDash />} />
               <Route path="/characters/new" element={<NewCharacter />} />
               <Route

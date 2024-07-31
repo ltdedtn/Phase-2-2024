@@ -7,9 +7,15 @@ interface AddStoryPartModalProps {
   onStoryPartAdded: () => void;
 }
 
+interface Story {
+  storyId: number;
+  title: string;
+}
+
 interface StoryPart {
   partId: number;
   content: string;
+  storyId: number;
 }
 
 const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
@@ -17,78 +23,142 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
   onClose,
   onStoryPartAdded,
 }) => {
-  const [content, setContent] = useState<string>("");
-  const [storyId, setStoryId] = useState<number | "">("");
+  const [stories, setStories] = useState<Story[]>([]);
   const [storyParts, setStoryParts] = useState<StoryPart[]>([]);
+  const [selectedStoryId, setSelectedStoryId] = useState<number | "">("");
+  const [selectedStoryPartId, setSelectedStoryPartId] = useState<number | "">(
+    ""
+  );
   const [error, setError] = useState<string | null>(null);
+  const [isLoadingStories, setIsLoadingStories] = useState<boolean>(true);
+  const [isLoadingStoryParts, setIsLoadingStoryParts] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      setIsLoadingStories(true);
+      try {
+        const response = await axios.get<Story[]>(
+          "https://localhost:7023/api/Story"
+        );
+        setStories(response.data);
+      } catch (error) {
+        console.error("Error fetching stories", error);
+        setError("Failed to fetch stories. Please try again.");
+      } finally {
+        setIsLoadingStories(false);
+      }
+    };
+
+    fetchStories();
+  }, []);
 
   useEffect(() => {
     const fetchStoryParts = async () => {
-      try {
-        const response = await axios.get<StoryPart[]>(
-          "https://localhost:7023/api/StoryParts"
-        );
-        setStoryParts(response.data);
-      } catch (error) {
-        console.error("Error fetching story parts", error);
-        setError("Failed to fetch story parts. Please try again.");
+      if (selectedStoryId) {
+        setIsLoadingStoryParts(true);
+        try {
+          const response = await axios.get<StoryPart[]>(
+            `https://localhost:7023/api/StoryParts?storyId=${selectedStoryId}`
+          );
+          setStoryParts(response.data);
+        } catch (error) {
+          console.error("Error fetching story parts", error);
+          setError("Failed to fetch story parts. Please try again.");
+        } finally {
+          setIsLoadingStoryParts(false);
+        }
       }
     };
 
     fetchStoryParts();
-  }, []);
+  }, [selectedStoryId]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!storyId) {
-      setError("Please select a story ID.");
+    if (!selectedStoryId || !selectedStoryPartId) {
+      setError("Please select a story and a story part.");
       return;
     }
 
     try {
-      await axios.post("https://localhost:7023/api/StoryParts", {
-        content,
-        storyId,
-        characterId,
-        createdAt: new Date().toISOString(),
+      await axios.post("https://localhost:7023/api/StoryParts/AddCharacters", {
+        storyPartId: selectedStoryPartId,
+        characterIds: [characterId],
       });
       onStoryPartAdded(); // Notify parent component to refresh the story parts
       onClose(); // Close the modal
     } catch (error) {
-      console.error("Error adding story part", error);
+      console.error("Error adding character to story part", error);
       setError("Failed to add story part. Please try again.");
     }
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Add Story Part</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="storyId">Story ID:</label>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 className="text-2xl font-bold mb-4">Add Story Part to Character</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="form-control">
+            <label htmlFor="storyId" className="label">
+              <span className="label-text">Select Story</span>
+            </label>
             <select
               id="storyId"
-              value={storyId}
-              onChange={(e) => setStoryId(Number(e.target.value))}
+              value={selectedStoryId}
+              onChange={(e) => setSelectedStoryId(Number(e.target.value))}
+              className="select select-bordered w-full"
               required
             >
-              <option value="">Select a Story ID</option>
-              {storyParts.map((part) => (
-                <option key={part.partId} value={part.partId}>
-                  {part.partId} - {part.content}
-                </option>
-              ))}
+              <option value="">Select a Story</option>
+              {isLoadingStories ? (
+                <option>Loading stories...</option>
+              ) : (
+                stories.map((story) => (
+                  <option key={story.storyId} value={story.storyId}>
+                    {story.title}
+                  </option>
+                ))
+              )}
             </select>
           </div>
-          {error && <p className="error">{error}</p>}
-          <button type="submit" className="btn-primary">
-            Add Story Part
-          </button>
-          <button type="button" className="btn-secondary" onClick={onClose}>
-            Cancel
-          </button>
+          <div className="form-control">
+            <label htmlFor="storyPartId" className="label">
+              <span className="label-text">Select Story Part</span>
+            </label>
+            <select
+              id="storyPartId"
+              value={selectedStoryPartId}
+              onChange={(e) => setSelectedStoryPartId(Number(e.target.value))}
+              className="select select-bordered w-full"
+              required
+            >
+              <option value="">Select a Story Part</option>
+              {isLoadingStoryParts ? (
+                <option>Loading story parts...</option>
+              ) : (
+                storyParts.map((part) => (
+                  <option key={part.partId} value={part.partId}>
+                    {part.content}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+          {error && <p className="text-red-500">{error}</p>}
+          <div className="flex justify-end space-x-4 mt-4">
+            <button type="submit" className="btn btn-primary">
+              Add Story Part
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

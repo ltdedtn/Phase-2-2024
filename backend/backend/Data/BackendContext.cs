@@ -17,28 +17,34 @@ namespace backend.Data
         public DbSet<StoryPartCharacter> StoryPartCharacters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
+
         {
+            // Configure the many-to-many relationship between StoryPart and Character
             modelBuilder.Entity<StoryPartCharacter>()
                 .HasKey(spc => new { spc.StoryPartId, spc.CharacterId });
 
             modelBuilder.Entity<StoryPartCharacter>()
                 .HasOne(spc => spc.StoryPart)
                 .WithMany(sp => sp.StoryPartCharacters)
-                .HasForeignKey(spc => spc.StoryPartId);
+                .HasForeignKey(spc => spc.StoryPartId)
+                .OnDelete(DeleteBehavior.Cascade); // Enable cascading delete on StoryPart
 
             modelBuilder.Entity<StoryPartCharacter>()
                 .HasOne(spc => spc.Character)
                 .WithMany(c => c.StoryPartCharacters)
-                .HasForeignKey(spc => spc.CharacterId);
-            modelBuilder.Entity<StoryPart>()
-    .HasKey(sp => sp.PartId); // Set the primary key
+                .HasForeignKey(spc => spc.CharacterId)
+                .OnDelete(DeleteBehavior.Cascade); // Enable cascading delete on Character
 
-            // Additional configurations if needed
-            // For example, configure relationships, constraints, etc.
+            // Configure the primary key for StoryPart
+            modelBuilder.Entity<StoryPart>()
+                .HasKey(sp => sp.PartId);
+
+            // Configure the one-to-many relationship between Story and StoryPart
             modelBuilder.Entity<StoryPart>()
                 .HasOne(sp => sp.Story)
                 .WithMany(s => s.StoryParts)
                 .HasForeignKey(sp => sp.StoryId);
+
         }
     }
 }

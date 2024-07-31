@@ -1,20 +1,26 @@
-﻿using backend.Models;
-using backend.Repositories;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using backend.Models;
+using backend.Repositories;
+using backend.DTOs;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class CharactersController : ControllerBase
     {
         private readonly ICharacterRepository _characterRepository;
+        private readonly IStoryPartRepository _storyPartRepository; // Add the story part repository
 
-        public CharactersController(ICharacterRepository characterRepository)
+        public CharactersController(ICharacterRepository characterRepository, IStoryPartRepository storyPartRepository)
         {
             _characterRepository = characterRepository;
+            _storyPartRepository = storyPartRepository;
         }
 
         [HttpGet]
@@ -25,7 +31,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacterById(int id)
+        public async Task<ActionResult<Character>> GetCharacter(int id)
         {
             var character = await _characterRepository.GetCharacterByIdAsync(id);
             if (character == null)
@@ -35,30 +41,71 @@ namespace backend.Controllers
             return Ok(character);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddCharacter(Character character)
+        [HttpGet("{id}/storyparts")]
+        public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByCharacterId(int id)
         {
-            await _characterRepository.AddCharacterAsync(character);
-            return CreatedAtAction(nameof(GetCharacterById), new { id = character.CharacterId }, character);
-        }
+            var storyParts = await _storyPartRepository.GetStoryPartsByCharacterIdAsync(id);
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateCharacter(int id, Character character)
-        {
-            if (id != character.CharacterId)
+            if (storyParts == null || !storyParts.Any())
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            await _characterRepository.UpdateCharacterAsync(character);
-            return NoContent();
+            return Ok(storyParts);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Character>> PostCharacter([FromForm] CharacterCreateDto model, IFormFile imageFile)
+        {
+            try
+            {
+                var character = new Character
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    StoryId = model.StoryId ?? 0,
+                    // Populate other fields as needed
+                };
+
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Generate a unique file name or use GUID
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine("wwwroot", "images", fileName); // Save to wwwroot/images folder
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+
+                    character.ImageUrl = "/images/" + fileName; // Store relative URL in database
+                }
+
+                await _characterRepository.AddCharacterAsync(character);
+
+                return CreatedAtAction(nameof(GetCharacter), new { id = character.CharacterId }, character);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for detailed debugging
+                Console.WriteLine($"Error creating character: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCharacter(int id)
         {
-            await _characterRepository.DeleteCharacterAsync(id);
-            return NoContent();
+            try
+            {
+                await _characterRepository.DeleteCharacterAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting character: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
