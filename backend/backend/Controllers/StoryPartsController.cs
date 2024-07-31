@@ -20,11 +20,12 @@ namespace backend.Controllers
             _storyPartRepository = storyPartRepository;
         }
 
-        // Get all story parts
+        // Get all story parts or filter by storyId
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryParts()
+        public async Task<IActionResult> GetStoryParts([FromQuery] int? storyId)
         {
-            var storyParts = await _storyPartRepository.GetStoryPartsAsync();
+            var storyParts = await _storyPartRepository.GetStoryPartsAsync(storyId);
+
             return Ok(storyParts);
         }
 
@@ -120,32 +121,15 @@ namespace backend.Controllers
             return NoContent();
         }
 
-
-        // Get story parts by story ID
-        [HttpGet("ByStory/{storyId}")]
-        public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByStoryId(int storyId)
-        {
-            var storyParts = await _storyPartRepository.GetStoryPartsByStoryIdAsync(storyId);
-
-            if (storyParts == null || !storyParts.Any())
-            {
-                return Ok(new List<StoryPart>()); // Return an empty list if no story parts found
-            }
-
-            return Ok(storyParts);
-        }
         [HttpPost("linkCharacterToStoryPart")]
         public async Task<IActionResult> LinkCharacterToStoryPart([FromBody] LinkCharacterToStoryPartDto dto)
         {
-            
             if (dto == null || dto.StoryPartId <= 0 || dto.CharacterId <= 0)
             {
                 return BadRequest("Invalid data.");
             }
-            Console.WriteLine(dto.StoryPartId);
-            Console.WriteLine(dto.CharacterId);
+
             var result = await _storyPartRepository.LinkCharacterToStoryPartAsync(dto.StoryPartId, dto.CharacterId);
-            Console.WriteLine(result);
 
             if (!result)
             {
@@ -154,6 +138,5 @@ namespace backend.Controllers
 
             return Ok("Character linked to story part successfully.");
         }
-
     }
 }

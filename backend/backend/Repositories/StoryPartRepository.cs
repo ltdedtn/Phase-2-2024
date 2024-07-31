@@ -16,11 +16,10 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<StoryPart>> GetStoryPartsAsync()
+        public async Task<IEnumerable<StoryPart>> GetStoryPartsAsync(int? storyId)
         {
             return await _context.StoryParts
-                .Include(sp => sp.Story)
-                .Include(sp => sp.StoryPartCharacters)
+                .Where(sp => !storyId.HasValue || sp.StoryId == storyId.Value)
                 .ToListAsync();
         }
 

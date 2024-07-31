@@ -61,6 +61,7 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
           const response = await axios.get<StoryPart[]>(
             `https://localhost:7023/api/StoryParts?storyId=${selectedStoryId}`
           );
+          console.log(response.data);
           setStoryParts(response.data);
         } catch (error) {
           console.error("Error fetching story parts", error);
@@ -68,6 +69,8 @@ const AddStoryPartModal: React.FC<AddStoryPartModalProps> = ({
         } finally {
           setIsLoadingStoryParts(false);
         }
+      } else {
+        setStoryParts([]); // Clear story parts if no story is selected
       }
     };
 

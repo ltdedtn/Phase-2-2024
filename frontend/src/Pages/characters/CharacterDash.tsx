@@ -55,9 +55,6 @@ const CharacterDash: React.FC = () => {
 
   useEffect(() => {
     if (selectedCharacter) {
-      console.log(
-        `Fetching story parts for character ${selectedCharacter.characterId}`
-      );
       fetchStoryParts(selectedCharacter.characterId);
     }
   }, [selectedCharacter]);
@@ -221,8 +218,7 @@ const CharacterDash: React.FC = () => {
           {selectedStoryParts.length > 0 ? (
             selectedStoryParts.map((storyPart) => (
               <p key={storyPart.partId}>
-                Story {storyPart.storyId} - Episode {storyPart.partId}:{" "}
-                {storyPart.content}
+                StoryId {storyPart.storyId} - {storyPart.content}
               </p>
             ))
           ) : (
