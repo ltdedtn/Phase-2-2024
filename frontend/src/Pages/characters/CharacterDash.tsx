@@ -14,6 +14,12 @@ const CharacterDash: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const [isCharacterExpanded, setIsCharacterExpanded] =
+    useState<boolean>(false);
+  const [expandedStoryPartId, setExpandedStoryPartId] = useState<number | null>(
+    null
+  );
+
   const carouselRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -75,6 +81,7 @@ const CharacterDash: React.FC = () => {
 
   const handleCharacterClick = (character: Character) => {
     setSelectedCharacter(character);
+    setIsCharacterExpanded(false); // Reset the expanded state when selecting a new character
   };
 
   const handleDelete = async (characterId: number) => {
@@ -144,6 +151,20 @@ const CharacterDash: React.FC = () => {
       });
     }
   };
+
+  const toggleCharacterDescription = () => {
+    setIsCharacterExpanded(!isCharacterExpanded);
+  };
+
+  const toggleStoryPartContent = (storyPartId: number) => {
+    setExpandedStoryPartId(
+      expandedStoryPartId === storyPartId ? null : storyPartId
+    );
+  };
+
+  const isDescriptionExpanded = selectedCharacter && isCharacterExpanded;
+  const isStoryPartExpanded = (storyPartId: number) =>
+    expandedStoryPartId === storyPartId;
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
@@ -227,13 +248,27 @@ const CharacterDash: React.FC = () => {
         </button>
       </div>
       {selectedCharacter && (
-        <div className="mt-8 text-center">
+        <div className="mt-8 max-w-[700px] mx-auto text-center">
           <img
             src={`https://localhost:7023${selectedCharacter.imageUrl}`}
             alt={selectedCharacter.name}
             className="w-48 h-48 object-cover mx-auto rounded-lg"
           />
-          <p className="mt-4 text-lg">{selectedCharacter.description}</p>
+          <p
+            className={`mt-4 text-lg overflow-hidden ${
+              isDescriptionExpanded ? "max-h-full" : "max-h-24"
+            } transition-all duration-300`}
+          >
+            {selectedCharacter.description}
+          </p>
+          {selectedCharacter.description.length > 100 && (
+            <button
+              className="text-blue-500 hover:text-blue-700 mt-2"
+              onClick={toggleCharacterDescription}
+            >
+              {isDescriptionExpanded ? "Read Less" : "Read More"}
+            </button>
+          )}
           {selectedStoryParts.length > 0 ? (
             <div className="mt-4">
               {selectedStoryParts.map((storyPart) => (
@@ -252,7 +287,25 @@ const CharacterDash: React.FC = () => {
                       </button>
                     </h3>
                   </div>
-                  <p className="mt-2 text-center">{storyPart.content}</p>
+                  <p
+                    className={`mt-2 text-center overflow-hidden ${
+                      isStoryPartExpanded(storyPart.partId)
+                        ? "max-h-full"
+                        : "max-h-24"
+                    } transition-all duration-300`}
+                  >
+                    {storyPart.content}
+                  </p>
+                  {storyPart.content.length > 100 && (
+                    <button
+                      className="text-blue-500 hover:text-blue-700 mt-2"
+                      onClick={() => toggleStoryPartContent(storyPart.partId)}
+                    >
+                      {isStoryPartExpanded(storyPart.partId)
+                        ? "Read Less"
+                        : "Read More"}
+                    </button>
+                  )}
                 </div>
               ))}
             </div>

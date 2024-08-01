@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "xQsVlB5U/JL4Efx/LwFkSZg12jksjqEh6kizZ2InR7E=",
+  "Hash": "XinnsbpPHu+DrWbB+xXivfuT41bkK9XbHjDTcqGPfgY=",
   "Source": "backend",
   "BasePath": "_content/backend",
   "Mode": "Default",
@@ -129,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\20548f4a-611a-4beb-ab4f-3d5fbfdec68c.png"
+    },
+    {
+      "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\20d961b8-a707-4a98-af7b-e5df604d1d60.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/20d961b8-a707-4a98-af7b-e5df604d1d60.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\20d961b8-a707-4a98-af7b-e5df604d1d60.jpg"
     },
     {
       "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\243f5107-d94a-4642-9b9f-494707ad5364.jpg",
@@ -262,6 +281,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\3cf41495-98c5-43a9-86cf-9d962bc335a3.png"
+    },
+    {
+      "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\40cf9598-7708-4f60-83b5-f6a1ad5ba20f.jpg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/40cf9598-7708-4f60-83b5-f6a1ad5ba20f.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\40cf9598-7708-4f60-83b5-f6a1ad5ba20f.jpg"
     },
     {
       "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\519f9f8a-ffa2-4be0-ab25-cf5527ef213c.jpg",
@@ -433,6 +471,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\65f6b76f-a14c-4d12-909c-4ddaa9cb002d.jpeg"
+    },
+    {
+      "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\702e9a61-6b9f-4434-8cc6-ff3cd8c1464f.jpeg",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/702e9a61-6b9f-4434-8cc6-ff3cd8c1464f.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\702e9a61-6b9f-4434-8cc6-ff3cd8c1464f.jpeg"
     },
     {
       "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\73d51e7b-07f4-4213-ae04-c8fcf58ca507.png",
@@ -661,6 +718,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\b3a643ad-2ea4-4331-bef4-7ac8cd8a983e.png"
+    },
+    {
+      "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\b44a9f67-752f-4c4c-9e40-630fe1d76a2d.png",
+      "SourceId": "backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\",
+      "BasePath": "_content/backend",
+      "RelativePath": "images/b44a9f67-752f-4c4c-9e40-630fe1d76a2d.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\b44a9f67-752f-4c4c-9e40-630fe1d76a2d.png"
     },
     {
       "Identity": "F:\\Programming Projects\\Phase-2-2024\\backend\\backend\\wwwroot\\images\\b9d06294-d016-4ce8-bf08-faf228c642a8.png",
