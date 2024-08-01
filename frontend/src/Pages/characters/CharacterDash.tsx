@@ -77,26 +77,29 @@ const CharacterDash: React.FC = () => {
     setSelectedCharacter(character);
   };
 
-  const handleDelete = async (storyPartId: number) => {
+  const handleDelete = async (characterId: number) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this story part?"
+      "Are you sure you want to delete this character?"
     );
     if (confirmDelete) {
       try {
         await axios.delete(
-          `https://localhost:7023/api/StoryParts/${storyPartId}`
+          `https://localhost:7023/api/Characters/${characterId}`
         );
-        setSelectedStoryParts(
-          selectedStoryParts.filter(
-            (storyPart) => storyPart.partId !== storyPartId
+        setCharacters(
+          characters.filter(
+            (character) => character.characterId !== characterId
           )
         );
+        setSelectedCharacter(null);
+        setSelectedStoryParts([]);
       } catch (error) {
-        console.error("Error deleting story part", error);
-        setError("Failed to delete story part. Please try again later.");
+        console.error("Error deleting character", error);
+        setError("Failed to delete character. Please try again later.");
       }
     }
   };
+
   const handleUnlink = async (storyPartId: number) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to unlink this story part?"
@@ -197,7 +200,7 @@ const CharacterDash: React.FC = () => {
             ))
           )}
           <button
-            className="py-2 px-4 rounded  ml-4"
+            className="py-2 px-4 rounded ml-4"
             onClick={handleCreateCharacter}
           >
             Add New Character
@@ -223,7 +226,6 @@ const CharacterDash: React.FC = () => {
           </svg>
         </button>
       </div>
-
       {selectedCharacter && (
         <div className="mt-8 text-center">
           <img
@@ -239,18 +241,18 @@ const CharacterDash: React.FC = () => {
                   key={storyPart.partId}
                   className="mb-4 p-4 rounded-lg shadow-md"
                 >
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-semibold">
-                      {storyPart.storyTitle}
+                  <div className="flex flex-col items-center">
+                    <h3 className="text-xl font-semibold text-center">
+                      {storyPart.storyTitle} -{" "}
+                      <button
+                        className="text-red-500 hover:text-red-700 mt-2 text-sm"
+                        onClick={() => handleUnlink(storyPart.partId)}
+                      >
+                        Unlink
+                      </button>
                     </h3>
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleUnlink(storyPart.partId)}
-                    >
-                      Unlink
-                    </button>
                   </div>
-                  <p>{storyPart.content}</p>
+                  <p className="mt-2 text-center">{storyPart.content}</p>
                 </div>
               ))}
             </div>
@@ -265,7 +267,7 @@ const CharacterDash: React.FC = () => {
               Add Story Parts
             </button>
             <button
-              className="py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600"
+              className="font-bold py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600"
               onClick={() =>
                 selectedCharacter?.characterId &&
                 handleDelete(selectedCharacter.characterId)

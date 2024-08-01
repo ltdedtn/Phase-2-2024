@@ -47,42 +47,40 @@ const UserDash = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center">Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="text-center text-red-500">{error}</div>;
   }
 
   return (
     <div className="p-4">
       <div className="overflow-x-auto">
-        <table className="table-auto w-full min-w-[640px]">
+        <table className="table w-full">
           <thead>
             <tr>
-              <th className="px-4 py-2">Username</th>
-              <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Created At</th>
-              <th className="px-4 py-2">Actions</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Created At</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user.userId}>
-                <td className="border px-4 py-2">{user.username}</td>
-                <td className="border px-4 py-2">{user.email}</td>
-                <td className="border px-4 py-2">
-                  {new Date(user.createdAt).toLocaleString()}
-                </td>
-                <td className="border px-4 py-2">
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>{new Date(user.createdAt).toLocaleString()}</td>
+                <td className="flex flex-col sm:flex-row gap-2">
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                    className="btn btn-primary btn-sm"
                     onClick={() => handleEdit(user.userId)}
                   >
                     Edit
                   </button>
                   <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    className="btn btn-error btn-sm"
                     onClick={() => handleDelete(user.userId)}
                   >
                     Delete
