@@ -138,6 +138,25 @@ namespace backend.Controllers
 
             return Ok("Character linked to story part successfully.");
         }
+        [HttpDelete("unlinkCharacterFromStoryPart")]
+        public async Task<IActionResult> UnlinkCharacterFromStoryPart([FromQuery] int storyPartId, [FromQuery] int characterId)
+        {
+            if (storyPartId <= 0 || characterId <= 0)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var result = await _storyPartRepository.UnlinkCharacterFromStoryPartAsync(storyPartId, characterId);
+
+            if (!result)
+            {
+                return NotFound("Story part or character not found.");
+            }
+
+            return Ok("Character unlinked from story part successfully.");
+        }
+
+
         [HttpGet("ByStory/{storyId}")]
         public async Task<ActionResult<IEnumerable<StoryPart>>> GetStoryPartsByStoryId(int storyId)
         {

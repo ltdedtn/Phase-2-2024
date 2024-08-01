@@ -142,6 +142,20 @@ namespace backend.Repositories
                 return false;
             }
         }
+        public async Task<bool> UnlinkCharacterFromStoryPartAsync(int storyPartId, int characterId)
+        {
+            var storyPartCharacter = await _context.StoryPartCharacters
+                .FirstOrDefaultAsync(spc => spc.StoryPartId == storyPartId && spc.CharacterId == characterId);
+
+            if (storyPartCharacter == null)
+            {
+                return false;
+            }
+
+            _context.StoryPartCharacters.Remove(storyPartCharacter);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
 
     }

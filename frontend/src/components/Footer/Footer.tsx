@@ -13,7 +13,6 @@ const Footer = () => {
   return (
     <div className="navbar bg-base-100 shadow-lg px-4 sm:px-8">
       <div className="flex-none">Ltdedtn</div>
-      {/* add more here later (socials ect)*/}
     </div>
   );
 };

@@ -15,7 +15,7 @@ namespace backend.Repositories
         Task<IEnumerable<StoryPart>> GetStoryPartsByStoryIdAsync(int storyId);
         Task<IEnumerable<StoryPart>> GetStoryPartsByCharacterIdAsync(int characterId);
         Task<bool> LinkCharacterToStoryPartAsync(int storyPartId, int characterId);
+        Task<bool> UnlinkCharacterFromStoryPartAsync(int storyPartId, int characterId);
 
-        
     }
 }

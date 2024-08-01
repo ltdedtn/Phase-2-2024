@@ -1,9 +1,8 @@
-// CharacterDash.tsx
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import AddStoryPartModal from "./AddStoryPartModal"; // Import the modal component
+import { Character, StoryPart } from "../../models/Character";
+import AddStoryPartModal from "./AddStoryPartModal";
 import { useNavigate } from "react-router-dom";
-import { StoryPart, Character } from "../../models/Character";
 
 const CharacterDash: React.FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -47,7 +46,6 @@ const CharacterDash: React.FC = () => {
       const response = await axios.get<StoryPart[]>(
         `https://localhost:7023/api/Characters/${characterId}/storyparts`
       );
-
       if (response.status === 200) {
         const storyParts = response.data || [];
         const updatedStoryParts = await Promise.all(
@@ -79,25 +77,43 @@ const CharacterDash: React.FC = () => {
     setSelectedCharacter(character);
   };
 
-  const handleDelete = async (characterId: number) => {
+  const handleDelete = async (storyPartId: number) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this character?"
+      "Are you sure you want to delete this story part?"
     );
     if (confirmDelete) {
       try {
         await axios.delete(
-          `https://localhost:7023/api/Characters/${characterId}`
+          `https://localhost:7023/api/StoryParts/${storyPartId}`
         );
-        setCharacters(
-          characters.filter(
-            (character) => character.characterId !== characterId
+        setSelectedStoryParts(
+          selectedStoryParts.filter(
+            (storyPart) => storyPart.partId !== storyPartId
           )
         );
-        setSelectedCharacter(null);
-        setSelectedStoryParts([]);
       } catch (error) {
-        console.error("Error deleting character", error);
-        setError("Failed to delete character. Please try again later.");
+        console.error("Error deleting story part", error);
+        setError("Failed to delete story part. Please try again later.");
+      }
+    }
+  };
+  const handleUnlink = async (storyPartId: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to unlink this story part?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          `https://localhost:7023/api/StoryParts/unlinkCharacterFromStoryPart?storyPartId=${storyPartId}&characterId=${selectedCharacter?.characterId}`
+        );
+        setSelectedStoryParts(
+          selectedStoryParts.filter(
+            (storyPart) => storyPart.partId !== storyPartId
+          )
+        );
+      } catch (error) {
+        console.error("Error unlinking story part", error);
+        setError("Failed to unlink story part. Please try again later.");
       }
     }
   };
@@ -127,18 +143,18 @@ const CharacterDash: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center">Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="text-center text-red-500">{error}</div>;
   }
 
   return (
-    <div className="character-dash-container">
-      <div className="carousel-container">
+    <div className="p-4">
+      <div className="relative flex items-center overflow-hidden">
         <button
-          className="carousel-button left"
+          className="absolute left-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
           onClick={() => scrollCarousel(-1)}
         >
           <svg
@@ -156,32 +172,39 @@ const CharacterDash: React.FC = () => {
             />
           </svg>
         </button>
-        <div className="carousel rounded-box" ref={carouselRef}>
-          {characters.map((character) => (
-            <div
-              key={character.characterId}
-              className="carousel-item"
-              onClick={() => handleCharacterClick(character)}
-            >
-              <div className="image-container">
-                <div className="character-name">{character.name}</div>
+        <div
+          className="flex overflow-x-auto scroll-smooth gap-4 p-4 mx-2"
+          ref={carouselRef}
+        >
+          {characters.length === 0 ? (
+            <p>No characters available</p>
+          ) : (
+            characters.map((character) => (
+              <div
+                key={character.characterId}
+                className="flex-shrink-0 w-64 h-48 relative bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden cursor-pointer"
+                onClick={() => handleCharacterClick(character)}
+              >
                 <img
                   src={`https://localhost:7023${character.imageUrl}`}
                   alt={character.name}
-                  className="carousel-image"
+                  className="w-full h-full object-cover"
                 />
+                <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white dark:bg-opacity-75 text-center py-2 text-sm">
+                  {character.name}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
           <button
-            className="create-story-button py-2 px-4 rounded ml-4"
+            className="py-2 px-4 rounded  ml-4"
             onClick={handleCreateCharacter}
           >
             Add New Character
           </button>
         </div>
         <button
-          className="carousel-button right"
+          className="absolute right-0 z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-700"
           onClick={() => scrollCarousel(1)}
         >
           <svg
@@ -200,32 +223,49 @@ const CharacterDash: React.FC = () => {
           </svg>
         </button>
       </div>
+
       {selectedCharacter && (
-        <div className="character-details">
+        <div className="mt-8 text-center">
           <img
             src={`https://localhost:7023${selectedCharacter.imageUrl}`}
             alt={selectedCharacter.name}
-            className="selected-image"
+            className="w-48 h-48 object-cover mx-auto rounded-lg"
           />
-          <p>{selectedCharacter.description}</p>
+          <p className="mt-4 text-lg">{selectedCharacter.description}</p>
           {selectedStoryParts.length > 0 ? (
-            selectedStoryParts.map((storyPart) => (
-              <p key={storyPart.partId}>
-                {storyPart.storyTitle} - {storyPart.content}
-              </p>
-            ))
+            <div className="mt-4">
+              {selectedStoryParts.map((storyPart) => (
+                <div
+                  key={storyPart.partId}
+                  className="mb-4 p-4 rounded-lg shadow-md"
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold">
+                      {storyPart.storyTitle}
+                    </h3>
+                    <button
+                      className="text-red-500 hover:text-red-700"
+                      onClick={() => handleUnlink(storyPart.partId)}
+                    >
+                      Unlink
+                    </button>
+                  </div>
+                  <p>{storyPart.content}</p>
+                </div>
+              ))}
+            </div>
           ) : (
             <p>No story parts available</p>
           )}
-          <div>
+          <div className="mt-4">
             <button
-              className="font-bold py-2 px-4 rounded"
+              className="py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-600 mr-4"
               onClick={handleAddStoryPartClick}
             >
               Add Story Parts
             </button>
             <button
-              className="font-bold py-2 px-4 rounded"
+              className="py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600"
               onClick={() =>
                 selectedCharacter?.characterId &&
                 handleDelete(selectedCharacter.characterId)
@@ -236,6 +276,7 @@ const CharacterDash: React.FC = () => {
           </div>
         </div>
       )}
+
       {isModalOpen && selectedCharacter && (
         <AddStoryPartModal
           characterId={selectedCharacter.characterId}
